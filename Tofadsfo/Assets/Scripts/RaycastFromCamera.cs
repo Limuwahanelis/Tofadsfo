@@ -6,9 +6,7 @@ using UnityEngine.EventSystems;
 public class RaycastFromCamera : MonoBehaviour
 {
     [SerializeField] LayerMask _mask;
-    //RaycastHit2D[] hits ;
     Camera _cam;
-    Vector2 _mousePos;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,25 +18,26 @@ public class RaycastFromCamera : MonoBehaviour
     {
         
     }
-    public void TryPress()
+    public IInteractable Raycast(out Vector3 point,out float width)
     {
+        point = Vector3.zero;
+        width = 0;
         RaycastHit hit;
-        Ray ray = _cam.ScreenPointToRay(_mousePos);
-        Logger.Log($"{ray.origin}");
+        Ray ray = _cam.ScreenPointToRay(HelperClass.MousePos);
         if (Physics.Raycast(ray, out hit,10f, _mask))
         {
-            
-            
             IInteractable tmp = hit.transform.GetComponent<IInteractable>();
             if (tmp!=null)
             {
-                Logger.Log("FASF");
-                tmp.Interact();
+                point=hit.transform.position;
+                width = hit.transform.lossyScale.x;
+                return tmp;
             }
         }
-    }
-    public void SetMousePos(Vector2 newMousePos)
-    {
-        _mousePos = newMousePos;
+        else
+        {
+            return null;
+        }
+        return null;
     }
 }

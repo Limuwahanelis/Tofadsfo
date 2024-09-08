@@ -5,15 +5,15 @@ using UnityEngine.EventSystems;
 
 public class TableWithProducts : MonoBehaviour,IInteractable
 {
+    [SerializeField] GameObject _productListUI;
+    [SerializeField] SpriteRenderer _productSprite;
     public void Interact()
     {
         ShowProductSelection();
     }
-
-
     public void ShowProductSelection()
     {
-        Logger.Log("Pressed");
+        _productListUI.SetActive(true);
     }
 
 }
