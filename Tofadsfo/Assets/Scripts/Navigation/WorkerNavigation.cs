@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WorkerNavigation : MonoBehaviour
@@ -11,11 +12,17 @@ public class WorkerNavigation : MonoBehaviour
     [SerializeField] AStarPathfinding _pathfinding;
     [SerializeField] List<ProductSO> _productsOrder;
     [SerializeField] List<Transform> _obstacles = new List<Transform>();
-    List<Vector2Int> _pathFromAssemblerToRegister;
-    List<List<Vector2Int>> _pathsFromRegisterToIngredients= new List<List<Vector2Int>>();
-    List<List<Vector2Int>> _pathsFromAssemblerToIngredients = new List<List<Vector2Int>>();
-    List<Color> _registerPathColors=new List<Color>();
-    List<Color> _assemblerPathColors = new List<Color>();
+    private List<Vector2Int> _pathFromAssemblerToRegister;
+    private List<PathWithProduct> _pathsFromRegisterToIngredients= new List<PathWithProduct>();
+    private List<List<Vector2Int>> _pathsFromAssemblerToIngredients = new List<List<Vector2Int>>();
+    private List<Color> _registerPathColors=new List<Color>();
+    private List<Color> _assemblerPathColors = new List<Color>();
+
+    public struct PathWithProduct
+    {
+        public ProductSO product;
+        public List<Vector2Int> path;
+    }
     public void AssignPaths()
     {
         _pathfinding.SetObstacles(TransToListInt(_obstacles));
@@ -28,7 +35,7 @@ public class WorkerNavigation : MonoBehaviour
         for(int i=0;i<_pathsFromRegisterToIngredients.Count;i++) 
         {
             _pathDraw.SetPathColor(_registerPathColors[i]);
-            _pathDraw.DrawLine(_pathsFromRegisterToIngredients[i]);
+            _pathDraw.DrawLine(_pathsFromRegisterToIngredients[i].path);
         }
         for(int i=0;i<_pathsFromAssemblerToIngredients.Count;i++)
         {
@@ -36,6 +43,17 @@ public class WorkerNavigation : MonoBehaviour
             _pathDraw.DrawLine(_pathsFromAssemblerToIngredients[i]);
         }
     }
+    public List<Vector2Int> GetShortestPathFromRegisterToProduct(ProductSO product)
+    {
+        List< PathWithProduct> paths = _pathsFromRegisterToIngredients.Where(x=>x.product==product).ToList();
+        PathWithProduct shortestPOath = paths[0];
+        for (int i=0;i< paths.Count;i++)
+        {
+            if (paths[i].path.Count < shortestPOath.path.Count) shortestPOath = paths[i];
+        }
+        return shortestPOath.path;
+    }
+    #region Make paths
     private void SetPathsFromAssemblerToIngredients()
     {
         for (int i = 0; i < _productsOrder.Count; i++)
@@ -63,10 +81,17 @@ public class WorkerNavigation : MonoBehaviour
             {
                 _registerPathColors.Add(_productsOrder[i].PathColor);
                 _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(tables[j].AccessPoints[0]));
-                _pathsFromRegisterToIngredients.Add(_pathfinding.GetPath());
+                _pathsFromRegisterToIngredients.Add(new PathWithProduct()
+                {
+                    path = _pathfinding.GetPath(),
+                    product = _productsOrder[i],
+                });
+                    
             }
         }
     }
+    #endregion
+    #region Helper Methods
     Vector2Int TransformToVector2Int(Transform tran)
     {
         return Vector3ToInt(tran.position);
@@ -91,4 +116,5 @@ public class WorkerNavigation : MonoBehaviour
 
         return toRet;
     }
+    #endregion
 }
