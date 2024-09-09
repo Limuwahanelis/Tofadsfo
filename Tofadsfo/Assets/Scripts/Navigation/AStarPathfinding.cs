@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class AStarPathfinding : MonoBehaviour
 {
-    public UnityEvent<List<Vector2Int>> OnPathCreated;
+    //public UnityEvent<List<Vector2Int>> OnPathCreated;
 
    // [SerializeField] ObstaclePool _obstaclePool;
    // [SerializeField] TileObjectPlacer _tileObjectPlacer;
@@ -44,7 +44,7 @@ public class AStarPathfinding : MonoBehaviour
         _startTilePos = startTilePos;
         _endTilePos = endTilePos;
     }
-    public void StartLooking()
+    public List<Vector2Int> GetPath()
     {
             _open = new List<PathFindingNode>();
         _close = new List<PathFindingNode>();
@@ -82,7 +82,17 @@ public class AStarPathfinding : MonoBehaviour
             }
         }
         _pathPoints.Reverse();
-        OnPathCreated?.Invoke(_pathPoints);
+        for(int i=0;i<_open.Count;i++)
+        {
+            _open[i].ClearNode();
+        }
+        for (int i = 0; i < _close.Count; i++)
+        {
+            _close[i].ClearNode();
+        }
+        _endNode.ClearNode();
+        return _pathPoints;
+        //OnPathCreated?.Invoke(_pathPoints);
     }
 
     public void DivideMapIntoTiles()

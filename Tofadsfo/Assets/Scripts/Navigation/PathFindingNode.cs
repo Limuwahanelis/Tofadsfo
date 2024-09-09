@@ -29,4 +29,11 @@ public class PathFindingNode
         previousNode = currentNode;
         //gcost 
     }
+    public void ClearNode()
+    {
+        gcost = 0;
+        hcost = 0;
+        fcost = 0;
+        previousNode = null;
+    }
 }
