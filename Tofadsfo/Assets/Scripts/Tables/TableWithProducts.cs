@@ -8,6 +8,8 @@ public class TableWithProducts : MonoBehaviour,IInteractable
 {
     public ProductSO AssociatedProdct => _associatedProduct;
     public int MaxProductAmount => _maxProductAmount;
+    public List<Transform> AccessPoints => _accessPoints;
+    [SerializeField] List<Transform>_accessPoints = new List<Transform>();
     [SerializeField] ProductSelect _productListUI;
     [SerializeField] SpriteRenderer _productSprite;
     [SerializeField] int _maxProductAmount;

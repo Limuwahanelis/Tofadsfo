@@ -32,8 +32,9 @@ public class AStarPathfinding : MonoBehaviour
     {
         UP,RIGHT,DOWN,LEFT
     }
-    public void SetObstacles()
+    public void SetObstacles(List<Vector2Int> list)
     {
+        _obstaclesPos = list;
        // this._obstaclesPos = new List<Vector2Int>( _obstaclePool.GetAllActiveObstaclePositions());
     }
     public void SetTargetTiles(Vector2Int startTilePos, Vector2Int endTilePos)
@@ -93,13 +94,13 @@ public class AStarPathfinding : MonoBehaviour
             for(int j = 0;j<_gridSize.y;j++)
             {
                 _all[i].Add(new PathFindingNode(i, j));
-                
-                //if (_obstaclesPos.Exists((vec) => vec.x == i && vec.y == j)) 
-                //{
-                //    Vector2Int obstaclepos = _obstaclesPos.Find((vec) => vec.x == i && vec.y == j);
-                //    _all[i][j].traversable = false;
-                //    _obstaclesPos.Remove(obstaclepos);
-                //}
+
+                if (_obstaclesPos.Exists((vec) => vec.x == i && vec.y == j))
+                {
+                    Vector2Int obstaclepos = _obstaclesPos.Find((vec) => vec.x == i && vec.y == j);
+                    _all[i][j].traversable = false;
+                    _obstaclesPos.Remove(obstaclepos);
+                }
             }
         }
         AssignNeighbours();
