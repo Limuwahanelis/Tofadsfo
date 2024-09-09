@@ -34,9 +34,10 @@ public class PlayerMouseInteractions : MonoBehaviour
         }
         else
         {
+            _interactable.Interact();
             _productsMenuPos.x -= width;
             _productsMenu.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(_productsMenuPos);
-            _productsMenu.SetActive(true);
+            //_productsMenu.SetActive(true);
         }
     }
 
