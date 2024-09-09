@@ -7,8 +7,8 @@ public class ProductSO : ScriptableObject
 {
     public Sprite Icon=>_icon;
     public int MaxAmount=>_maxAmount;
-    public int CurrentAmount => _currentAmount;
+    public Color PathColor => _pathColor;
     [SerializeField] Sprite _icon;
     [SerializeField] int _maxAmount;
-    [SerializeField] int _currentAmount;
+    [SerializeField] Color _pathColor;
 }

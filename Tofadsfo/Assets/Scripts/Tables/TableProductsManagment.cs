@@ -18,6 +18,11 @@ public class TableProductsManagment : MonoBehaviour
             _tables.Add(new List<TableWithProducts>());
         }
     }
+    public List<TableWithProducts> GetAllTablesWithProduct(ProductSO product)
+    {
+        int index = _products.IndexOf(product);
+        return _tables[index];
+    }
     public void RemoveProductFromTable(ProductSO product, TableWithProducts table)
     {
         int index = _products.IndexOf(product);
