@@ -36,24 +36,19 @@ public class AStarPathfinding : MonoBehaviour
     {
        // this._obstaclesPos = new List<Vector2Int>( _obstaclePool.GetAllActiveObstaclePositions());
     }
-    public void SetTargetTiles()
+    public void SetTargetTiles(Vector2Int startTilePos, Vector2Int endTilePos)
     {
-       // if (_tileObjectPlacer.IsGoalPlaced) _endTilePos =new Vector2Int( ((int)_tileObjectPlacer.GoalTile.transform.position.x), ((int)_tileObjectPlacer.GoalTile.transform.position.z));
-       // if (_tileObjectPlacer.IsStartPlaced) _startTilePos = new Vector2Int(((int)_tileObjectPlacer.StartTile.transform.position.x), ((int)_tileObjectPlacer.StartTile.transform.position.z));
-    }
-    public void SetGridSize()
-    {
-        //_gridSize =new Vector2Int( ((int)_tileMapSetter.GridSize.x), ((int)_tileMapSetter.GridSize.y));
+        _startNode = _all[startTilePos.x][startTilePos.y];
+        _endNode = _all[endTilePos.x][endTilePos.y];
+        _startTilePos = startTilePos;
+        _endTilePos = endTilePos;
     }
     public void StartLooking()
     {
-        //if (!_tileObjectPlacer.IsGoalPlaced) return;
-        //if (!_tileObjectPlacer.IsStartPlaced) return;
             _open = new List<PathFindingNode>();
         _close = new List<PathFindingNode>();
         _startNode.gcost = 0;
         _startNode.hcost = Mathf.RoundToInt(Vector2.Distance(_startTilePos, _endTilePos) * 10);
-        //startTile.fcost = startTile.gcost + 
         _open.Add(_startNode);
         PathFindingNode current = null;
         while (_open.Count>0)
@@ -91,8 +86,6 @@ public class AStarPathfinding : MonoBehaviour
 
     public void DivideMapIntoTiles()
     {
-       // if (!_tileObjectPlacer.IsGoalPlaced) return;
-       // if (!_tileObjectPlacer.IsStartPlaced) return;
         _all = new List<List<PathFindingNode>>();
         for (int i = 0;i<_gridSize.x;i++)
         {
@@ -100,15 +93,13 @@ public class AStarPathfinding : MonoBehaviour
             for(int j = 0;j<_gridSize.y;j++)
             {
                 _all[i].Add(new PathFindingNode(i, j));
-                if (i == _startTilePos.x && j == _startTilePos.y) _startNode = _all[i][j];
-                if( i == _endTilePos.x &&j == _endTilePos.y) _endNode = _all[i][j];
                 
-                if (_obstaclesPos.Exists((vec) => vec.x == i && vec.y == j)) 
-                {
-                    Vector2Int obstaclepos = _obstaclesPos.Find((vec) => vec.x == i && vec.y == j);
-                    _all[i][j].traversable = false;
-                    _obstaclesPos.Remove(obstaclepos);
-                }
+                //if (_obstaclesPos.Exists((vec) => vec.x == i && vec.y == j)) 
+                //{
+                //    Vector2Int obstaclepos = _obstaclesPos.Find((vec) => vec.x == i && vec.y == j);
+                //    _all[i][j].traversable = false;
+                //    _obstaclesPos.Remove(obstaclepos);
+                //}
             }
         }
         AssignNeighbours();
