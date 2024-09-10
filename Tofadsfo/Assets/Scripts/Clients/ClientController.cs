@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class ClientController : MonoBehaviour
@@ -9,6 +10,7 @@ public class ClientController : MonoBehaviour
     [SerializeField] ProductSO _requestedProduct;
     [SerializeField] ClientQueue _queue;
     [SerializeField] float _timeToDeliverFood;
+    [SerializeField] TMP_Text test_text;
     protected Dictionary<Type, ClientState> _clientStates = new Dictionary<Type, ClientState>();
     protected ClientState _currenStatet;
     protected ClientContext _context;
@@ -26,6 +28,10 @@ public class ClientController : MonoBehaviour
     public void AssignQueue(ClientQueue queue)
     {
         _queue = queue;
+    }
+    public void AssignNumbertest(int number)
+    {
+        test_text.text= number.ToString();
     }
     private void SetUp()
     {

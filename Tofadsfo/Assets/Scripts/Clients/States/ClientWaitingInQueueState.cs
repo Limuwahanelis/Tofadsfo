@@ -14,15 +14,24 @@ public class ClientWaitingInQueueState : ClientState
     {
 
     }
-
     public override void SetUpState(ClientContext context)
     {
         base.SetUpState(context);
-
+        _context.queue.OnPlaceFreed += CheckPlace;
     }
 
     public override void InterruptState()
     {
      
+    }
+    private void CheckPlace(ClientQueuePlace place)
+    {
+        if (_context.queue.GetPlaceIndex(place)==_context.queue.GetPlaceIndex(_context.assigendPlaceInQueue)-1)
+        {
+            ClientQueuePlace newPlace= _context.queue.GetFreePlace();
+            _context.queue.SetQueuePlace(_context.assigendPlaceInQueue, false);
+            _context.assigendPlaceInQueue = newPlace;
+            ChangeState(ClientGoToAssignedPlaceInQueueState.StateType);
+        }
     }
 }

@@ -17,6 +17,7 @@ public abstract class ClientState
     {
         _context = context;
     }
+    public virtual void Remove() { }
     public virtual void Test() { }
     public abstract void Update();
     public abstract void InterruptState();
