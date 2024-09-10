@@ -39,6 +39,8 @@ public class WorkerGoToAssemblerState : WorkerState
     {
         base.SetUpState(context);
         _currentPositionIndex = 0;
+        _startPos = _context.currentPath[0];
+        _timetoReachTarget = Vector2.Distance(_startPos, _context.currentPath[1]) / _speed;
     }
 
     public override void InterruptState()

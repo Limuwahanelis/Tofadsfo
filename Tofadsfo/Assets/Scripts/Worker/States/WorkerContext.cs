@@ -12,4 +12,6 @@ public class WorkerContext
     public Transform workerTran;
     public TableWithProducts targetProductTable;
     public ProductSO takenProduct;
+    public TableProductsManagment tableProductsManagment;
+    
 }

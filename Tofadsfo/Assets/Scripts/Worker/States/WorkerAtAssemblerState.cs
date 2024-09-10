@@ -23,7 +23,9 @@ public class WorkerAtAssemblerState : WorkerState
         if (productToGet == null)
         {
             _context.takenProduct= _context.associatedAssembler.Assemble();
+            _context.currentPath=_context.navigation.GetPathFromAssemblerToregister();
             Logger.Log("Assemble");
+            ChangeState(WorkerGoToRegisterState.StateType);
         }
         else
         {

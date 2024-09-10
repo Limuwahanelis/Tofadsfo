@@ -1187,6 +1187,7 @@ MonoBehaviour:
   _speed: 1
   _nav: {fileID: 457764039}
   _associatedAssembler: {fileID: 6213999815291572771}
+  _tableProductsManagment: {fileID: 348215354}
 --- !u!1001 &489352037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3794,7 +3795,7 @@ PrefabInstance:
       objectReference: {fileID: 1477109760}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _maxProductAmount
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _tableProductsManagment
@@ -4021,7 +4022,7 @@ PrefabInstance:
       objectReference: {fileID: 1477109760}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _maxProductAmount
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _tableProductsManagment
@@ -4179,6 +4180,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 348215354}
+        m_TargetAssemblyTypeName: TableProductsManagment, Assembly-CSharp
+        m_MethodName: AssingProducts
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 457764040}
         m_TargetAssemblyTypeName: WorkerController, Assembly-CSharp
         m_MethodName: Test
@@ -4797,7 +4810,7 @@ PrefabInstance:
       objectReference: {fileID: 1477109760}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _maxProductAmount
-      value: 15
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _tableProductsManagment
@@ -4817,7 +4830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8470251100607143684, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8470251100607143684, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5094,7 +5107,7 @@ PrefabInstance:
       objectReference: {fileID: 1477109760}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _maxProductAmount
-      value: 15
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5406107527678176106, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
       propertyPath: _tableProductsManagment

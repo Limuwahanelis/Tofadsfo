@@ -13,7 +13,7 @@ public class WorkerNavigation : MonoBehaviour
     [SerializeField] AStarPathfinding _pathfinding;
     [SerializeField] List<ProductSO> _productsOrder;
     [SerializeField] List<Transform> _obstacles = new List<Transform>();
-    private List<Vector2Int> _pathFromAssemblerToRegister;
+    private List<Vector2Int> _pathFromRegisterToAsembler;
     private List<PathWithProduct> _pathsFromRegisterToIngredients= new List<PathWithProduct>();
     private List<PathWithProduct> _pathsFromAssemblerToIngredients = new List<PathWithProduct>();
     private List<Color> _registerPathColors=new List<Color>();
@@ -33,7 +33,7 @@ public class WorkerNavigation : MonoBehaviour
         SetPathsFromRegisteToIngredients();
         SetPathsFromAssemblerToIngredients();
         _pathDraw.SetPathColor(Color.white);
-        _pathDraw.DrawLine(_pathFromAssemblerToRegister);
+        _pathDraw.DrawLine(_pathFromRegisterToAsembler);
         for(int i=0;i<_pathsFromRegisterToIngredients.Count;i++) 
         {
             _pathDraw.SetPathColor(_registerPathColors[i]);
@@ -45,6 +45,7 @@ public class WorkerNavigation : MonoBehaviour
             _pathDraw.DrawLine(_pathsFromAssemblerToIngredients[i].path);
         }
     }
+    #region GetPaths
     /// <summary>
     /// 
     /// </summary>
@@ -54,20 +55,34 @@ public class WorkerNavigation : MonoBehaviour
     public List<Vector2Int> GetShortestPathFromRegisterToProduct(ProductSO product,out TableWithProducts table)
     {
         List< PathWithProduct> paths = _pathsFromRegisterToIngredients.Where(x=>x.product==product).ToList();
+        paths = paths.Where(x => x.table.CurrentProductAmount > 0).ToList();
+        if (paths.Count == 0) Logger.Error("NO matching path");
         PathWithProduct shortestPOath = GetShortestPath(paths);
+
         table = shortestPOath.table;
+        //if(table.CurrentProductAmount==1) _pathsFromRegisterToIngredients.Remove(shortestPOath);
+
         return shortestPOath.path;
     }
     public List<Vector2Int> GetShortestPathFromAssemblerToProduct(ProductSO product, out TableWithProducts table)
     {
         List<PathWithProduct> paths = _pathsFromAssemblerToIngredients.Where(x => x.product == product).ToList();
+        paths = paths.Where(x => x.table.CurrentProductAmount > 0).ToList();
+        if (paths.Count == 0) Logger.Error("NO matching path");
         PathWithProduct path=GetShortestPath(paths);
-        table=path.table;
+        table =path.table;
+        //if (table.CurrentProductAmount == 1) _pathsFromAssemblerToIngredients.Remove(path);
         return path.path;
     }
     public List<Vector2Int> GetPathFromTableToAssembler(TableWithProducts table)
     {
-        List<Vector2Int> path = _pathsFromAssemblerToIngredients.Find(x => x.table == table).path;
+        List<Vector2Int> path =new List<Vector2Int>( _pathsFromAssemblerToIngredients.Find(x => x.table == table).path);
+        path.Reverse();
+        return path;
+    }
+    public List<Vector2Int> GetPathFromAssemblerToregister()
+    {
+        List<Vector2Int> path =new List<Vector2Int>( _pathFromRegisterToAsembler);
         path.Reverse();
         return path;
     }
@@ -80,6 +95,7 @@ public class WorkerNavigation : MonoBehaviour
         }
         return shortestPOath;
     }
+    #endregion
     #region Make paths
     private void SetPathsFromAssemblerToIngredients()
     {
@@ -102,7 +118,7 @@ public class WorkerNavigation : MonoBehaviour
     private void SetPathFromRegisterToAssembler()
     {
          _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(_assemblyAccessPoint));
-        _pathFromAssemblerToRegister =_pathfinding.GetPath();
+        _pathFromRegisterToAsembler =_pathfinding.GetPath();
     }
     private void SetPathsFromRegisteToIngredients()
     {

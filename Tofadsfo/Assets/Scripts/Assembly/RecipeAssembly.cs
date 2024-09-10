@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class RecipeAssembly : MonoBehaviour
 {
+    public RecipeSO.CraftingRecipeShort Shortrecipe => _recipeShort;
     public RecipeSO Recipe => _recipe;
     [SerializeField] RecipeSO _recipe;
     [SerializeField] SpriteRenderer _spriteRenderer;

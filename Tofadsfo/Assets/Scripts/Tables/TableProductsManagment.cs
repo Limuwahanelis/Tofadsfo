@@ -10,12 +10,15 @@ public class TableProductsManagment : MonoBehaviour
     [SerializeField] List<ProductSO> _products = new List<ProductSO>();
     List<int> _tablesWithProduct=new List<int>();
     List<List<TableWithProducts>> _tables = new List<List<TableWithProducts>>();
+    private List<int> _notReservedProductsAmount;
     private void Start()
     {
-        for(int i=0;i<_products.Count;i++)
+        _notReservedProductsAmount=new List<int>();
+        for (int i=0;i<_products.Count;i++)
         {
             _tablesWithProduct.Add(0);
             _tables.Add(new List<TableWithProducts>());
+            _notReservedProductsAmount.Add(0);
         }
     }
     public List<TableWithProducts> GetAllTablesWithProduct(ProductSO product)
@@ -92,6 +95,30 @@ public class TableProductsManagment : MonoBehaviour
             total -= amount;
             _tables[index][j].SetProductAmount(amount);
         }
+    }
+    public void AssingProducts()
+    {
+        for(int i=0;i<_products.Count;i++) 
+        {
+            for(int j = 0; j < _tables[i].Count;j++) 
+            {
+                _notReservedProductsAmount[i] += _tables[i][j].CurrentProductAmount;
+            }
+        }
+    }
+    public bool IsThereEnoughProductsForARecipe(RecipeSO.CraftingRecipeShort recipe)
+    {
+        for (int i = 0; i < recipe.productTypes.Length; i++)
+        {
+            int index = _products.IndexOf(recipe.productTypes[i]);
+            if (_notReservedProductsAmount[index] < recipe.resourcesNum[i]) return false;
+        }
+        for (int i = 0; i < recipe.productTypes.Length; i++)
+        {
+            int index = _products.IndexOf(recipe.productTypes[i]);
+            _notReservedProductsAmount[index] -= recipe.resourcesNum[i];
+        }
+        return true;
     }
 
 

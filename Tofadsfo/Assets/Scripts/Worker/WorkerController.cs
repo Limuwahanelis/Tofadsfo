@@ -10,6 +10,7 @@ public class WorkerController : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] WorkerNavigation _nav;
     [SerializeField] RecipeAssembly _associatedAssembler;
+    [SerializeField] TableProductsManagment _tableProductsManagment;
     private List<Vector2Int> _currentPath;
     private bool _go = false;
 
@@ -41,6 +42,7 @@ public class WorkerController : MonoBehaviour
             navigation = _nav,
             associatedAssembler=_associatedAssembler,
             workerTran=transform,
+            tableProductsManagment=_tableProductsManagment,
         };
 
         WorkerState.GetState getState = GetState;
