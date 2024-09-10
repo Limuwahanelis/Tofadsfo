@@ -10,4 +10,6 @@ public class WorkerContext
     public RecipeAssembly associatedAssembler;
     public List<Vector2Int> currentPath;
     public Transform workerTran;
+    public TableWithProducts targetProductTable;
+    public ProductSO takenProduct;
 }

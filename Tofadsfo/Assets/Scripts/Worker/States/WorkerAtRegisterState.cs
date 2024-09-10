@@ -23,12 +23,14 @@ public class WorkerAtRegisterState : WorkerState
     }
     public override void Test()
     {
-        List<Vector2Int> path = _workerContext.navigation.GetShortestPathFromRegisterToProduct(_workerContext.associatedAssembler.Recipe.Ingredients[0]);
+
+        List<Vector2Int> path = _context.navigation.GetShortestPathFromRegisterToProduct(_context.associatedAssembler.Recipe.Ingredients[0], out TableWithProducts table);
         for (int i=0;i<path.Count;i++)
         {
             Logger.Log(path[i]);
         }
-        _workerContext.currentPath = path;
+        _context.currentPath = path;
+        _context.targetProductTable = table;
         ChangeState(WorkerGoToProductState.StateType);
     }
     public override void InterruptState()

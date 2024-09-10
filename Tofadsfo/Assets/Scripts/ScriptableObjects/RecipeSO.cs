@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="New recipe",menuName ="Recipe")]
 public class RecipeSO : ScriptableObject
 {
+    public struct CraftingRecipeShort
+    {
+        public ProductSO[] productTypes;
+        public int[] resourcesNum;
+    }
     public ProductSO Result => _result;
     public List<ProductSO> Ingredients => _ingredients;
     public Sprite Icon => _result.Icon;

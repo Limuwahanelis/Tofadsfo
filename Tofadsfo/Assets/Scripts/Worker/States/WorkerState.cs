@@ -7,7 +7,7 @@ public abstract class WorkerState
 {
     public delegate WorkerState GetState(Type state);
     protected GetState _getType;
-    protected WorkerContext _workerContext;
+    protected WorkerContext _context;
 
     public WorkerState(GetState function)
     {
@@ -15,7 +15,7 @@ public abstract class WorkerState
     }
     public virtual void SetUpState(WorkerContext context)
     {
-        _workerContext = context;
+        _context = context;
     }
     public virtual void Test() { }
     public abstract void Update();
@@ -23,8 +23,8 @@ public abstract class WorkerState
     public void ChangeState(Type newStateType)
     {
         WorkerState state = _getType(newStateType);
-        _workerContext.ChangeState(state);
-        state.SetUpState(_workerContext);
+        _context.ChangeState(state);
+        state.SetUpState(_context);
     }
 
 

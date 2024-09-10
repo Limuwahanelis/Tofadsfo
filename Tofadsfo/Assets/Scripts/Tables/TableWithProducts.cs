@@ -26,6 +26,12 @@ public class TableWithProducts : MonoBehaviour,IInteractable
     {
         _productListUI.ShowList(this);
     }
+    public ProductSO TakeProduct()
+    {
+        _currentProductAmount -= 1;
+        _productAmountDisplay.text = _currentProductAmount.ToString();
+        return _associatedProduct;
+    }
     public void SetProduct(ProductSO product)
     {
         _productSprite.sprite = product.Icon;
