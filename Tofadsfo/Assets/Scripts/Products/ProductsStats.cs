@@ -9,7 +9,6 @@ public class ProductsStats : MonoBehaviour
     [SerializeField] List<ProductSO> _products=new List<ProductSO>();
     [SerializeField] List<int> _maxAmounts;
     [SerializeField] List<int> _currentAmounts;
-
     /// <summary>
     /// 
     /// </summary>
