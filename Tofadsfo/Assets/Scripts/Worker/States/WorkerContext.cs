@@ -13,5 +13,6 @@ public class WorkerContext
     public TableWithProducts targetProductTable;
     public ProductSO takenProduct;
     public TableProductsManagment tableProductsManagment;
+    public Register register;
     
 }
