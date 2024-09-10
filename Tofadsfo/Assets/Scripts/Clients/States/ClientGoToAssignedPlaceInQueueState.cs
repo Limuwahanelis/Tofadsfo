@@ -22,7 +22,8 @@ public class ClientGoToAssignedPlaceInQueueState : ClientState
         if (_lerp / _timetoReachTarget > 1)
         {
             _context.transform.position = _context.assigendPlaceInQueue.transform.position;
-            ChangeState(ClientWaitingInQueueState.StateType);
+            if (_context.queue.GetPlaceIndex(_context.assigendPlaceInQueue) == 0) ChangeState(ClientAtRegisterState.StateType);
+            else ChangeState(ClientWaitingInQueueState.StateType);
         }
     }
 

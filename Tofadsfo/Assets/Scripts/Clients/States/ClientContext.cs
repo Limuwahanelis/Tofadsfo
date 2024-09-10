@@ -9,4 +9,5 @@ public class ClientContext
     public ClientQueue queue;
     public ClientQueuePlace assigendPlaceInQueue;
     public Transform transform;
+    public Register register;
 }

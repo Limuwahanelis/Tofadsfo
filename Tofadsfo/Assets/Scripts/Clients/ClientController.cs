@@ -11,6 +11,7 @@ public class ClientController : MonoBehaviour
     [SerializeField] ClientQueue _queue;
     [SerializeField] float _timeToDeliverFood;
     [SerializeField] TMP_Text test_text;
+    [SerializeField] Register _register;
     protected Dictionary<Type, ClientState> _clientStates = new Dictionary<Type, ClientState>();
     protected ClientState _currenStatet;
     protected ClientContext _context;
@@ -25,13 +26,11 @@ public class ClientController : MonoBehaviour
     {
         _currenStatet.Update();
     }
-    public void AssignQueue(ClientQueue queue)
+    public void SetUp(ClientQueue queue, int number,Register register)
     {
         _queue = queue;
-    }
-    public void AssignNumbertest(int number)
-    {
-        test_text.text= number.ToString();
+        test_text.text = number.ToString();
+        _register = register;
     }
     private void SetUp()
     {
@@ -42,7 +41,8 @@ public class ClientController : MonoBehaviour
         {
             ChangeState=ChangeState,
             queue= _queue,
-            transform=transform
+            transform=transform,
+            register= _register,
         };
 
         ClientState.GetState getState = GetState;

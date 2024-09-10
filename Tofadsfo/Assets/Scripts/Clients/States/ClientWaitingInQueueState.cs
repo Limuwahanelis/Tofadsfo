@@ -22,7 +22,7 @@ public class ClientWaitingInQueueState : ClientState
 
     public override void InterruptState()
     {
-     
+        _context.queue.OnPlaceFreed -= CheckPlace;
     }
     private void CheckPlace(ClientQueuePlace place)
     {
