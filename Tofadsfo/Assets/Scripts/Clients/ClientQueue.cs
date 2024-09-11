@@ -18,6 +18,10 @@ public class ClientQueue : MonoBehaviour
     {
         return _queuePlaces.IndexOf(place);
     }
+    public bool HasFreePlace()
+    {
+        return _queuePlaces.Exists(x => x.Istaken == false);
+    }
     public ClientQueuePlace GetFreePlace()
     {
         ClientQueuePlace place =_queuePlaces.First(x => x.Istaken == false);

@@ -26,9 +26,9 @@ public class ClientController : MonoBehaviour
     {
         _currenStatet.Update();
     }
-    public void SetUp(ClientQueue queue, int number,Register register)
+    public void SetUp(int number,Register register)
     {
-        _queue = queue;
+        _queue = register.RegisterQueue;
         test_text.text = number.ToString();
         _register = register;
     }
