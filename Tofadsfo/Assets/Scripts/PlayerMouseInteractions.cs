@@ -9,19 +9,15 @@ public class PlayerMouseInteractions : MonoBehaviour
     private IInteractable _interactable;
     private bool _closeProductsMenu=true;
     private Vector3 _productsMenuPos;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool _canInteract=true;
 
-    // Update is called once per frame
-    void Update()
+    public void SetInteraction(bool value)
     {
-        
+        _canInteract= value;
     }
     public void TryPress()
     {
+        if (!_canInteract) return;
         Vector3 point;
         _interactable=_cameraRaycast.Raycast(out point,out float width);
         _productsMenuPos = point;
@@ -37,7 +33,6 @@ public class PlayerMouseInteractions : MonoBehaviour
             _interactable.Interact();
             _productsMenuPos.x -= width;
             _productsMenu.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(_productsMenuPos);
-            //_productsMenu.SetActive(true);
         }
     }
 
