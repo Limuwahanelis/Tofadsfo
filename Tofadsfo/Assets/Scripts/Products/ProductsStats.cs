@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ProductsStats : MonoBehaviour
@@ -25,10 +26,11 @@ public class ProductsStats : MonoBehaviour
         _currentAmounts[index] -= amount;
         OnCurrentProductAmountChanged?.Invoke(product, _currentAmounts[index]);
     }
-    public void OncreaseProductAmount(ProductSO product, int amount)
+    public void OnIcreaseProductAmount(ProductSO product, int amount)
     {
         int index = _products.IndexOf(product);
         _currentAmounts[index] += amount;
+        _currentAmounts[index] = math.clamp(_currentAmounts[index], 0, _maxAmounts[index]);
         OnCurrentProductAmountChanged?.Invoke(product, _currentAmounts[index]);
     }
 
