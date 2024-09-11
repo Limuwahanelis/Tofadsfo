@@ -17,7 +17,6 @@ public class WorkerAtRegisterState : WorkerState
         {
             if (_context.tableProductsManagment.IsThereEnoughProductsForARecipe(_context.associatedAssembler.Shortrecipe))
             {
-                Logger.Log("eng");
                 List<Vector2Int> path = _context.navigation.GetShortestPathFromRegisterToProduct(_context.associatedAssembler.Recipe.Ingredients[0], out TableWithProducts table);
                 _context.currentPath = path;
                 _context.targetProductTable = table;
@@ -25,10 +24,8 @@ public class WorkerAtRegisterState : WorkerState
             }
             else
             {
-                Logger.Log("NOt en");
+                ChangeState(WorkerNoWorkState.StateType);
             }
-            // choose path to product
-            Logger.Log("AT register");
         }
     }
 
