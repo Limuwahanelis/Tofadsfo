@@ -7,9 +7,16 @@ using UnityEngine;
 public class ProductsStats : MonoBehaviour
 {
     public Action<ProductSO, int> OnCurrentProductAmountChanged;
-    [SerializeField] List<ProductSO> _products=new List<ProductSO>();
-    [SerializeField] List<int> _maxAmounts;
-    [SerializeField] List<int> _currentAmounts;
+    [SerializeField] LevelInfoSO _levelInfo;
+    private List<ProductSO> _products=new List<ProductSO>();
+    private List<int> _maxAmounts;
+    private List<int> _currentAmounts;
+    private void Awake()
+    {
+        _products = _levelInfo.AvailableProducts;
+        _maxAmounts = _levelInfo.MaximumAmountOfIngredients;
+        _currentAmounts = _levelInfo.StartingAmountOfIngredients;
+    }
     /// <summary>
     /// 
     /// </summary>
