@@ -19,5 +19,6 @@ MonoBehaviour:
   _availableProducts:
   - {fileID: 11400000, guid: 6fae8a9a306948544b45cd93802797d2, type: 2}
   - {fileID: 11400000, guid: 1a564bece0c19cb418c265bd482da67f, type: 2}
-  _startingAmountOfIngredients: 0600000006000000
-  _maximumAmountOfIngredients: 0f0000000f000000
+  - {fileID: 11400000, guid: 4bc2a19fe0b34094aa07c79099634d22, type: 2}
+  _startingAmountOfIngredients: 080000000800000000000000
+  _maximumAmountOfIngredients: 0f0000000f00000000000000

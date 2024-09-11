@@ -6,15 +6,17 @@ using UnityEngine;
 
 public class TableProductsManagment : MonoBehaviour
 {
+    [SerializeField] ProductSO _emptyProduct;
     [SerializeField] ProductsStats _productsStats;
-    [SerializeField] List<ProductSO> _products = new List<ProductSO>();
     List<int> _tablesWithProduct=new List<int>();
     List<List<TableWithProducts>> _tables = new List<List<TableWithProducts>>();
+    private List<ProductSO> _products = new List<ProductSO>();
     private List<int> _notReservedProductsAmount;
-    private void Start()
+    public void SetUp(List<ProductSO> products)
     {
-        _notReservedProductsAmount=new List<int>();
-        for (int i=0;i<_products.Count;i++)
+        _products = products;
+        _notReservedProductsAmount = new List<int>();
+        for (int i = 0; i < _products.Count; i++)
         {
             _tablesWithProduct.Add(0);
             _tables.Add(new List<TableWithProducts>());
@@ -39,9 +41,10 @@ public class TableProductsManagment : MonoBehaviour
     }
     public void AddProductToATable(ProductSO product, TableWithProducts table)
     {
-
+        if (product == _emptyProduct && table.AssociatedProdct == _emptyProduct)  return;
         int index = _products.IndexOf(product);
         int indexProductToRemove=_products.IndexOf(table.AssociatedProdct);
+
         if (indexProductToRemove != -1)
         {
             if (_tables[indexProductToRemove].Contains(table))
@@ -49,6 +52,12 @@ public class TableProductsManagment : MonoBehaviour
                 _tables[indexProductToRemove].Remove(table);
                 UpdateTables(indexProductToRemove);
             }
+        }
+        if (product == _emptyProduct)
+        {
+            UpdateTables(indexProductToRemove);
+            table.SetProductAmount(0);
+            return;
         }
         if (_tables[index].Contains(table))
         {
@@ -62,7 +71,7 @@ public class TableProductsManagment : MonoBehaviour
 
     private void UpdateTables(int index)
     {
-        int total = _productsStats.GetProductAmounts(_products[index]).Item1;
+        int total = _productsStats.GetProductAmounts(_products[index]).Item2;
         int remainder = 0;
         int amountPertable = total;
         if (_tables[index].Count != 0)

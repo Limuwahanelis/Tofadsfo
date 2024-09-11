@@ -8,12 +8,14 @@ public class ProductsStats : MonoBehaviour
 {
     public Action<ProductSO, int> OnCurrentProductAmountChanged;
     [SerializeField] LevelInfoSO _levelInfo;
+    [SerializeField] ProductSelect _productSelect;
     private List<ProductSO> _products=new List<ProductSO>();
     private List<int> _maxAmounts;
     private List<int> _currentAmounts;
     private void Awake()
     {
         _products = _levelInfo.AvailableProducts;
+        _productSelect.SetUp(_products);
         _maxAmounts = _levelInfo.MaximumAmountOfIngredients;
         _currentAmounts = _levelInfo.StartingAmountOfIngredients;
     }
