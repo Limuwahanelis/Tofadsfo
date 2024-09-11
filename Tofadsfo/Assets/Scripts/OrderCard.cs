@@ -13,12 +13,17 @@ public class OrderCard : MonoBehaviour
     [SerializeField] TMP_Text _numberOfOrderstext;
     [SerializeField] TMP_Text _priceText;
 
-    private void Awake()
+    private void Start()
     {
         _orderImage.sprite = _recipe.Icon;
         _orderNameText.text = _recipe.name;
         _priceText.text =$"<color=green>{_recipe.Price}$";
         _numberOfOrderstext.text=_numberOfOrders.ToString();
+    }
+    public void SetRecipe(RecipeSO recipe,int numberOfOrders)
+    {
+        _recipe = recipe;
+        _numberOfOrders = numberOfOrders;
     }
 
 }
