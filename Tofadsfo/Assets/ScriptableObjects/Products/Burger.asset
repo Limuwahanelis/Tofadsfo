@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df93c4e22196b946bfdc62d3f892a27, type: 3}
   m_Name: Burger
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 8898312e7d09ae545890db1159b36709, type: 3}
   _maxAmount: 0
-  _pathColor: {r: 0, g: 0, b: 0, a: 0}
+  _pathColor: {r: 0.9245283, g: 0.68416804, b: 0, a: 1}
