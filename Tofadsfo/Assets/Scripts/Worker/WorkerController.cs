@@ -17,11 +17,15 @@ public class WorkerController : MonoBehaviour
     protected Dictionary<Type, WorkerState> _workerStates = new Dictionary<Type, WorkerState>();
     protected WorkerState _currenStatet;
     protected WorkerContext _context;
-    private void Start()
+    private void Awake()
     {
         _nav.AssignRegisterAndAssembler(_register, _associatedAssembler);
-        SetUpWorker();
+        
 
+    }
+    private void Start()
+    {
+        SetUpWorker();
     }
     private void Update()
     {

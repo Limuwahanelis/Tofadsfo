@@ -12,7 +12,7 @@ public class RecipeAssembly : MonoBehaviour
     [SerializeField] SpriteRenderer _spriteRenderer;
     private RecipeSO.CraftingRecipeShort _recipeShort;
     private RecipeSO.CraftingRecipeShort _collectedProductsShort;
-    void Start()
+    void Awake()
     {
         ConvertRecipetoShortFormat();
        

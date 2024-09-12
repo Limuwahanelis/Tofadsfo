@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class WorkerNavigation : MonoBehaviour
 {
+    public RecipeAssembly AssociatedAssembly=>_associateAssembler;
+    public PathDrawing PathDrawer => _pathDraw;
      Register _workerRegister;
      RecipeAssembly _associateAssembler;
     [SerializeField] PathDrawing _pathDraw;
@@ -110,6 +112,7 @@ public class WorkerNavigation : MonoBehaviour
             int pathIndex = _pathsFromAssemblerToIngredients.IndexOf(path);
             _pathsFromAssemblerToIngredients.Remove(path);
             _assemblerPathColors.RemoveAt(pathIndex);
+            _pathDraw.RemovePathFromAssemblerToTable(table);
         }
         path = _pathsFromRegisterToIngredients.Find(x => x.table == table);
         if (path.table != null)
@@ -117,6 +120,7 @@ public class WorkerNavigation : MonoBehaviour
             int pathIndex = _pathsFromRegisterToIngredients.IndexOf(path);
             _pathsFromRegisterToIngredients.Remove(path);
             _registerPathColors.RemoveAt(pathIndex);
+            _pathDraw.RemovePathFromRegisterToTable(table);
         }
         bool haAny = false;
         for (int i = 0; i < _associateAssembler.Shortrecipe.productTypes.Count(); i++)
@@ -134,6 +138,8 @@ public class WorkerNavigation : MonoBehaviour
             table = table,
             product = _associateAssembler.Shortrecipe.productTypes[productIndex],
         });
+        _pathDraw.SetPathColor(table.AssociatedProdct.PathColor);
+        _pathDraw.CreateLineFromAssemblerToTable(_pathsFromAssemblerToIngredients[_pathsFromAssemblerToIngredients.Count - 1].path, table);
 
         _registerPathColors.Add(_associateAssembler.Shortrecipe.productTypes[productIndex].PathColor);
         _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(table.AccessPoints[0]));
@@ -143,6 +149,7 @@ public class WorkerNavigation : MonoBehaviour
             path = _pathfinding.GetPath(),
             product = _associateAssembler.Shortrecipe.productTypes[productIndex],
         });
+        _pathDraw.CreateLineFromRegisterToTable(_pathsFromRegisterToIngredients[_pathsFromAssemblerToIngredients.Count - 1].path, table);
     }
     private void SetPathFromRegisterToAssembler()
     {
