@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class ClientSpawner : MonoBehaviour
 {
-    [SerializeField] float _levelTime;
-    [SerializeField] ClientQueue _queue;
     [SerializeField] GameObject _clientPrefab;
     [SerializeField] Transform _clientSpawnTran;
     [SerializeField] List<Register> _registers;
@@ -20,6 +18,7 @@ public class ClientSpawner : MonoBehaviour
     private float _timer = 0;
     private int _productIndex = 0;
     private int _registerIndex = 0;
+    private float _levelTime;
     private void Start()
     {
         
@@ -109,11 +108,12 @@ public class ClientSpawner : MonoBehaviour
         {
             totalOrders+= _amountOfOrders[i];
         }
-        
+        _levelTime = levelInfo.LevelTimeInSecnods;
         _timetoSpawnClient = _levelTime / totalOrders;
 
 
     }
+    // used by a button
     public void SetRegisters()
     {
         for (int i = 0; i < _registers.Count; i++)
@@ -129,6 +129,7 @@ public class ClientSpawner : MonoBehaviour
             }
         }
     }
+    // used by a button
     public void SetSpawn(bool value)
     {
         _startSpawn = value;

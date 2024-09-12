@@ -40,6 +40,7 @@ public class LevelEndManager : MonoBehaviour
         _earnedMoney += money;
         _moneyInfo.AddMoney(money);
     }
+
     private void OnDestroy()
     {
         for (int i = 0; i < _workers.Count; i++)

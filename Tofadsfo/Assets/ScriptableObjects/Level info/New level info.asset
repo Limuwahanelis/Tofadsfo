@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: New level info
   m_EditorClassIdentifier: 
   _startingMoney: 25
+  _levelTimeInSeconds: 60
   _orders:
   - {fileID: 11400000, guid: 378a568abf11b1740b6394c2ad80e66d, type: 2}
   _amountOfOrders: 08000000
