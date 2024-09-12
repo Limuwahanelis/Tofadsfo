@@ -31,5 +31,6 @@ public class ClientAtRegisterState : ClientState
         _context.register.OnOrderDelivered -= OrderDelivered;
         _context.register.TakeOrder();
         _context.queue.SetQueuePlace(_context.assigendPlaceInQueue, false);
+        ChangeState(ClientGoToDoorState.StateType);
     }
 }

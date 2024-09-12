@@ -8,6 +8,7 @@ public class ClientSpawner : MonoBehaviour
     [SerializeField] GameObject _clientPrefab;
     [SerializeField] Transform _clientSpawnTran;
     [SerializeField] List<Register> _registers;
+    [SerializeField] List<Transform> _pathToDoors;
     [SerializeField] bool _startSpawn = false;
     float _timetoSpawnClient;
     private List<RecipeSO> _orders;
@@ -137,6 +138,6 @@ public class ClientSpawner : MonoBehaviour
     public void SpawnClient(int num,Register register)
     {
         ClientController client= Instantiate(_clientPrefab, _clientSpawnTran.position,_clientPrefab.transform.rotation).GetComponent<ClientController>();
-        client.SetUp(num, register);
+        client.SetUp(num, register, _pathToDoors);
     }
 }
