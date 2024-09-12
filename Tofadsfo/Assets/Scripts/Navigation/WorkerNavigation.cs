@@ -38,35 +38,15 @@ public class WorkerNavigation : MonoBehaviour
         _workerRegister = register;
         _associateAssembler = assemlber;
     }
+    // Used by a button to show paths
     public void DrawPaths()
     {
-        //_pathDraw.SetPathColor(Color.white);
-        //_pathDraw.DrawLine(_pathFromRegisterToAsembler);
         for (int i = 0; i < _pathsFromRegisterToIngredients.Count; i++)
         {
             _pathDraw.SetPathColor(_registerPathColors[i]);
             _pathDraw.DrawLine(_pathsFromRegisterToIngredients[i].path);
         }
         for (int i = 0; i < _pathsFromAssemblerToIngredients.Count; i++)
-        {
-            _pathDraw.SetPathColor(_assemblerPathColors[i]);
-            _pathDraw.DrawLine(_pathsFromAssemblerToIngredients[i].path);
-        }
-    }
-    public void AssignPaths()
-    {
-
-        //SetPathFromRegisterToAssembler();
-        //SetPathsFromRegisteToIngredients();
-        //SetPathsFromAssemblerToIngredients();
-        _pathDraw.SetPathColor(Color.white);
-        _pathDraw.DrawLine(_pathFromRegisterToAsembler);
-        for(int i=0;i<_pathsFromRegisterToIngredients.Count;i++) 
-        {
-            _pathDraw.SetPathColor(_registerPathColors[i]);
-            _pathDraw.DrawLine(_pathsFromRegisterToIngredients[i].path);
-        }
-        for(int i=0;i<_pathsFromAssemblerToIngredients.Count;i++)
         {
             _pathDraw.SetPathColor(_assemblerPathColors[i]);
             _pathDraw.DrawLine(_pathsFromAssemblerToIngredients[i].path);
@@ -87,8 +67,6 @@ public class WorkerNavigation : MonoBehaviour
         PathWithProduct shortestPOath = GetShortestPath(paths);
 
         table = shortestPOath.table;
-        //if(table.CurrentProductAmount==1) _pathsFromRegisterToIngredients.Remove(shortestPOath);
-
         return shortestPOath.path;
     }
     public List<Vector2Int> GetShortestPathFromAssemblerToProduct(ProductSO product, out TableWithProducts table)
@@ -98,7 +76,6 @@ public class WorkerNavigation : MonoBehaviour
         if (paths.Count == 0) Logger.Error("NO matching path");
         PathWithProduct path=GetShortestPath(paths);
         table =path.table;
-        //if (table.CurrentProductAmount == 1) _pathsFromAssemblerToIngredients.Remove(path);
         return path.path;
     }
     public List<Vector2Int> GetPathFromTableToAssembler(TableWithProducts table)
@@ -167,48 +144,11 @@ public class WorkerNavigation : MonoBehaviour
             product = _associateAssembler.Shortrecipe.productTypes[productIndex],
         });
     }
-    //private void SetPathsFromAssemblerToIngredients()
-    //{
-    //    for (int i = 0; i < _productsOrder.Count; i++)
-    //    {
-    //        List<TableWithProducts> tables = _productManagment.GetAllTablesWithProduct(_productsOrder[i]);
-    //        for (int j = 0; j < tables.Count; j++)
-    //        {
-    //            _assemblerPathColors.Add(_productsOrder[i].PathColor);
-    //            _pathfinding.SetTargetTiles(TransformToVector2Int(_assemblyAccessPoint), TransformToVector2Int(tables[j].AccessPoints[0]));
-    //            _pathsFromAssemblerToIngredients.Add(new PathWithProduct()
-    //            {
-    //                path = _pathfinding.GetPath(),
-    //                table = tables[j],
-    //                product = _productsOrder[i],
-    //            });
-    //        }
-    //    }
-    //}
     private void SetPathFromRegisterToAssembler()
     {
          _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(_assemblyAccessPoint));
         _pathFromRegisterToAsembler =_pathfinding.GetPath();
     }
-    //private void SetPathsFromRegisteToIngredients()
-    //{
-    //    for(int i=0;i<_productsOrder.Count;i++) 
-    //    {
-    //        List<TableWithProducts> tables = _productManagment.GetAllTablesWithProduct(_productsOrder[i]);
-    //        for (int j = 0; j < tables.Count;j++)
-    //        {
-    //            _registerPathColors.Add(_productsOrder[i].PathColor);
-    //            _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(tables[j].AccessPoints[0]));
-    //            _pathsFromRegisterToIngredients.Add(new PathWithProduct()
-    //            {
-    //                table = tables[j],
-    //                path = _pathfinding.GetPath(),
-    //                product = _productsOrder[i],
-    //            });
-                    
-    //        }
-    //    }
-    //}
     #endregion
     #region Helper Methods
     Vector2Int TransformToVector2Int(Transform tran)

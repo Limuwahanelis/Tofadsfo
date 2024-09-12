@@ -24,21 +24,10 @@ public class TableProductsManagment : MonoBehaviour
             _notReservedProductsAmount.Add(0);
         }
     }
-    public List<TableWithProducts> GetAllTablesWithProduct(ProductSO product)
-    {
-        int index = _products.IndexOf(product);
-        return _tables[index];
-    }
-    //public void RemoveProductFromTable(ProductSO product, TableWithProducts table)
+    //public List<TableWithProducts> GetAllTablesWithProduct(ProductSO product)
     //{
     //    int index = _products.IndexOf(product);
-    //    if (!_tables[index].Contains(table)) return;
-    //    _tables[index].Remove(table);
-    //    for(int i=0;i<_products.Count;i++)
-    //    {
-    //        UpdateTables(i);
-    //    }
-        
+    //    return _tables[index];
     //}
     public void AddProductToATable(ProductSO product, TableWithProducts table)
     {
@@ -111,16 +100,6 @@ public class TableProductsManagment : MonoBehaviour
 
             total -= amount;
             _tables[index][j].SetProductAmount(amount);
-        }
-    }
-    public void AssingProducts()
-    {
-        for(int i=0;i<_products.Count;i++) 
-        {
-            for(int j = 0; j < _tables[i].Count;j++) 
-            {
-                _notReservedProductsAmount[i] += _tables[i][j].CurrentProductAmount;
-            }
         }
     }
     public bool IsThereEnoughProductsForARecipe(RecipeSO.CraftingRecipeShort recipe)
