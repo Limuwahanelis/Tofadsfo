@@ -18,6 +18,7 @@ public class WorkerNoWorkState : WorkerState
     public override void SetUpState(WorkerContext context)
     {
         base.SetUpState(context);
+        Logger.Log("NO work");
     }
 
     public override void InterruptState()
