@@ -7,15 +7,25 @@ public class PathDrawing : MonoBehaviour
 {
 
     [SerializeField] GameObject _LineDrawerPrefab;
+    private List<LineRenderer> _lineRenderes=new List<LineRenderer>();
     private int _lineIndex = 0;
     private Color _pathColor;
     public void SetPathColor(Color color)
     {
         _pathColor = color;
     }
+    public void ClearPahts()
+    {
+        for(int i=0;i<_lineRenderes.Count;i++) 
+        {
+            Destroy(_lineRenderes[i].gameObject);
+        }
+        _lineRenderes.Clear();
+    }
     public void DrawLine(List<Vector2Int> nodes)
     {
         LineRenderer lineRenderer = Instantiate(_LineDrawerPrefab).GetComponent<LineRenderer>();
+        _lineRenderes.Add(lineRenderer);
         lineRenderer.positionCount = 0;
         lineRenderer.startColor = _pathColor;
         lineRenderer.endColor = _pathColor;
