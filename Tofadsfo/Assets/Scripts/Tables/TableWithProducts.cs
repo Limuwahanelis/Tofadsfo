@@ -44,6 +44,7 @@ public class TableWithProducts : MonoBehaviour,IInteractable
         //_tableProductsManagment.RemoveProductFromTable(product, this);
         _tableProductsManagment.AddProductToATable(product, this);
         _associatedProduct = product;
+        _tableProductsManagment.UpdateWorkersnavigations(this);
     }
     public void SetProductAmount(int amount)
     {

@@ -8,6 +8,7 @@ public class TableProductsManagment : MonoBehaviour
 {
     [SerializeField] ProductSO _emptyProduct;
     [SerializeField] ProductsStats _productsStats;
+    [SerializeField] List<WorkerNavigation> _workersNavs;
     List<int> _tablesWithProduct=new List<int>();
     List<List<TableWithProducts>> _tables = new List<List<TableWithProducts>>();
     private List<ProductSO> _products = new List<ProductSO>();
@@ -28,17 +29,17 @@ public class TableProductsManagment : MonoBehaviour
         int index = _products.IndexOf(product);
         return _tables[index];
     }
-    public void RemoveProductFromTable(ProductSO product, TableWithProducts table)
-    {
-        int index = _products.IndexOf(product);
-        if (!_tables[index].Contains(table)) return;
-        _tables[index].Remove(table);
-        for(int i=0;i<_products.Count;i++)
-        {
-            UpdateTables(i);
-        }
+    //public void RemoveProductFromTable(ProductSO product, TableWithProducts table)
+    //{
+    //    int index = _products.IndexOf(product);
+    //    if (!_tables[index].Contains(table)) return;
+    //    _tables[index].Remove(table);
+    //    for(int i=0;i<_products.Count;i++)
+    //    {
+    //        UpdateTables(i);
+    //    }
         
-    }
+    //}
     public void AddProductToATable(ProductSO product, TableWithProducts table)
     {
         if (product == _emptyProduct && table.AssociatedProdct == _emptyProduct)  return;
@@ -50,6 +51,7 @@ public class TableProductsManagment : MonoBehaviour
             if (_tables[indexProductToRemove].Contains(table))
             {
                 _tables[indexProductToRemove].Remove(table);
+                _notReservedProductsAmount[indexProductToRemove] -= table.CurrentProductAmount;
                 UpdateTables(indexProductToRemove);
             }
         }
@@ -65,10 +67,16 @@ public class TableProductsManagment : MonoBehaviour
             return;
         }
         _tables[index].Add(table);
-        
         UpdateTables( index);
+        _notReservedProductsAmount[index] += table.CurrentProductAmount;
     }
-
+    public void UpdateWorkersnavigations(TableWithProducts table)
+    {
+        for(int i=0;i<_workersNavs.Count;i++) 
+        {
+            _workersNavs[i].SetPathsForTable(table);
+        }
+    }
     private void UpdateTables(int index)
     {
         int total = _productsStats.GetProductAmounts(_products[index]).Item2;

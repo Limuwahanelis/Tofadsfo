@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class WorkerNavigation : MonoBehaviour
 {
+     Register _workerRegister;
+     RecipeAssembly _associateAssembler;
     [SerializeField] PathDrawing _pathDraw;
     [SerializeField] Transform _workerRegisterAccessPoint;
     [SerializeField] Transform _assemblyAccessPoint;
@@ -25,13 +27,38 @@ public class WorkerNavigation : MonoBehaviour
         public ProductSO product;
         public List<Vector2Int> path;
     }
-    public void AssignPaths()
+    private void Start()
     {
         _pathfinding.SetObstacles(TransToListInt(_obstacles));
         _pathfinding.DivideMapIntoTiles();
         SetPathFromRegisterToAssembler();
-        SetPathsFromRegisteToIngredients();
-        SetPathsFromAssemblerToIngredients();
+    }
+    public void AssignRegisterAndAssembler(Register register,RecipeAssembly assemlber)
+    {
+        _workerRegister = register;
+        _associateAssembler = assemlber;
+    }
+    public void DrawPaths()
+    {
+        //_pathDraw.SetPathColor(Color.white);
+        //_pathDraw.DrawLine(_pathFromRegisterToAsembler);
+        for (int i = 0; i < _pathsFromRegisterToIngredients.Count; i++)
+        {
+            _pathDraw.SetPathColor(_registerPathColors[i]);
+            _pathDraw.DrawLine(_pathsFromRegisterToIngredients[i].path);
+        }
+        for (int i = 0; i < _pathsFromAssemblerToIngredients.Count; i++)
+        {
+            _pathDraw.SetPathColor(_assemblerPathColors[i]);
+            _pathDraw.DrawLine(_pathsFromAssemblerToIngredients[i].path);
+        }
+    }
+    public void AssignPaths()
+    {
+
+        //SetPathFromRegisterToAssembler();
+        //SetPathsFromRegisteToIngredients();
+        //SetPathsFromAssemblerToIngredients();
         _pathDraw.SetPathColor(Color.white);
         _pathDraw.DrawLine(_pathFromRegisterToAsembler);
         for(int i=0;i<_pathsFromRegisterToIngredients.Count;i++) 
@@ -97,48 +124,91 @@ public class WorkerNavigation : MonoBehaviour
     }
     #endregion
     #region Make paths
-    private void SetPathsFromAssemblerToIngredients()
+    public void SetPathsForTable(TableWithProducts table)
     {
-        for (int i = 0; i < _productsOrder.Count; i++)
+
+        PathWithProduct path = _pathsFromAssemblerToIngredients.Find(x => x.table == table);
+        if (path.table != null)
         {
-            List<TableWithProducts> tables = _productManagment.GetAllTablesWithProduct(_productsOrder[i]);
-            for (int j = 0; j < tables.Count; j++)
-            {
-                _assemblerPathColors.Add(_productsOrder[i].PathColor);
-                _pathfinding.SetTargetTiles(TransformToVector2Int(_assemblyAccessPoint), TransformToVector2Int(tables[j].AccessPoints[0]));
-                _pathsFromAssemblerToIngredients.Add(new PathWithProduct()
-                {
-                    path = _pathfinding.GetPath(),
-                    table = tables[j],
-                    product = _productsOrder[i],
-                });
-            }
+            int pathIndex = _pathsFromAssemblerToIngredients.IndexOf(path);
+            _pathsFromAssemblerToIngredients.Remove(path);
+            _assemblerPathColors.RemoveAt(pathIndex);
         }
+        path = _pathsFromRegisterToIngredients.Find(x => x.table == table);
+        if (path.table != null)
+        {
+            int pathIndex = _pathsFromRegisterToIngredients.IndexOf(path);
+            _pathsFromRegisterToIngredients.Remove(path);
+            _registerPathColors.RemoveAt(pathIndex);
+        }
+        bool haAny = false;
+        for (int i = 0; i < _associateAssembler.Shortrecipe.productTypes.Count(); i++)
+        {
+            if (_associateAssembler.Shortrecipe.productTypes[i] == table.AssociatedProdct) haAny = true;
+        }
+        if (!haAny) return;
+        int productIndex =_associateAssembler.Shortrecipe.productTypes.ToList().IndexOf(table.AssociatedProdct);
+
+        _assemblerPathColors.Add(_associateAssembler.Shortrecipe.productTypes[productIndex].PathColor);
+        _pathfinding.SetTargetTiles(TransformToVector2Int(_assemblyAccessPoint), TransformToVector2Int(table.AccessPoints[0]));
+        _pathsFromAssemblerToIngredients.Add(new PathWithProduct()
+        {
+            path = _pathfinding.GetPath(),
+            table = table,
+            product = _associateAssembler.Shortrecipe.productTypes[productIndex],
+        });
+
+        _registerPathColors.Add(_associateAssembler.Shortrecipe.productTypes[productIndex].PathColor);
+        _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(table.AccessPoints[0]));
+        _pathsFromRegisterToIngredients.Add(new PathWithProduct()
+        {
+            table = table,
+            path = _pathfinding.GetPath(),
+            product = _associateAssembler.Shortrecipe.productTypes[productIndex],
+        });
     }
+    //private void SetPathsFromAssemblerToIngredients()
+    //{
+    //    for (int i = 0; i < _productsOrder.Count; i++)
+    //    {
+    //        List<TableWithProducts> tables = _productManagment.GetAllTablesWithProduct(_productsOrder[i]);
+    //        for (int j = 0; j < tables.Count; j++)
+    //        {
+    //            _assemblerPathColors.Add(_productsOrder[i].PathColor);
+    //            _pathfinding.SetTargetTiles(TransformToVector2Int(_assemblyAccessPoint), TransformToVector2Int(tables[j].AccessPoints[0]));
+    //            _pathsFromAssemblerToIngredients.Add(new PathWithProduct()
+    //            {
+    //                path = _pathfinding.GetPath(),
+    //                table = tables[j],
+    //                product = _productsOrder[i],
+    //            });
+    //        }
+    //    }
+    //}
     private void SetPathFromRegisterToAssembler()
     {
          _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(_assemblyAccessPoint));
         _pathFromRegisterToAsembler =_pathfinding.GetPath();
     }
-    private void SetPathsFromRegisteToIngredients()
-    {
-        for(int i=0;i<_productsOrder.Count;i++) 
-        {
-            List<TableWithProducts> tables = _productManagment.GetAllTablesWithProduct(_productsOrder[i]);
-            for (int j = 0; j < tables.Count;j++)
-            {
-                _registerPathColors.Add(_productsOrder[i].PathColor);
-                _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(tables[j].AccessPoints[0]));
-                _pathsFromRegisterToIngredients.Add(new PathWithProduct()
-                {
-                    table = tables[j],
-                    path = _pathfinding.GetPath(),
-                    product = _productsOrder[i],
-                });
+    //private void SetPathsFromRegisteToIngredients()
+    //{
+    //    for(int i=0;i<_productsOrder.Count;i++) 
+    //    {
+    //        List<TableWithProducts> tables = _productManagment.GetAllTablesWithProduct(_productsOrder[i]);
+    //        for (int j = 0; j < tables.Count;j++)
+    //        {
+    //            _registerPathColors.Add(_productsOrder[i].PathColor);
+    //            _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(tables[j].AccessPoints[0]));
+    //            _pathsFromRegisterToIngredients.Add(new PathWithProduct()
+    //            {
+    //                table = tables[j],
+    //                path = _pathfinding.GetPath(),
+    //                product = _productsOrder[i],
+    //            });
                     
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
     #endregion
     #region Helper Methods
     Vector2Int TransformToVector2Int(Transform tran)
