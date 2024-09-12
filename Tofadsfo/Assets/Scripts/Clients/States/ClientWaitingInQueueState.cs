@@ -6,6 +6,7 @@ using UnityEngine;
 public class ClientWaitingInQueueState : ClientState
 {
     public static Type StateType { get => typeof(ClientWaitingInQueueState); }
+    private bool _wasAssignedNewPos = false;
     public ClientWaitingInQueueState(GetState function) : base(function)
     {
     }
@@ -17,6 +18,7 @@ public class ClientWaitingInQueueState : ClientState
     public override void SetUpState(ClientContext context)
     {
         base.SetUpState(context);
+        _wasAssignedNewPos = false;
         _context.queue.OnPlaceFreed += CheckPlace;
     }
 
@@ -26,11 +28,15 @@ public class ClientWaitingInQueueState : ClientState
     }
     private void CheckPlace(ClientQueuePlace place)
     {
+        if (_wasAssignedNewPos) return;
         if (_context.queue.GetPlaceIndex(place)==_context.queue.GetPlaceIndex(_context.assigendPlaceInQueue)-1)
         {
+            _context.queue.OnPlaceFreed -= CheckPlace;
+            _wasAssignedNewPos = true;
             ClientQueuePlace newPlace= _context.queue.GetFreePlace();
-            _context.queue.SetQueuePlace(_context.assigendPlaceInQueue, false);
+            ClientQueuePlace tmp = _context.assigendPlaceInQueue;
             _context.assigendPlaceInQueue = newPlace;
+            _context.queue.SetQueuePlace(tmp, false);
             ChangeState(ClientGoToAssignedPlaceInQueueState.StateType);
         }
     }
