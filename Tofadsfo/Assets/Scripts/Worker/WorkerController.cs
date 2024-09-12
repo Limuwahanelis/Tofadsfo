@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class WorkerController : MonoBehaviour
 {
+    public Action OnWorkerNoIngredients;
     [SerializeField] float _speed;
     [SerializeField] WorkerNavigation _nav;
     [SerializeField] RecipeAssembly _associatedAssembler;
@@ -44,6 +45,7 @@ public class WorkerController : MonoBehaviour
             workerTran=transform,
             tableProductsManagment=_tableProductsManagment,
             register=_register,
+            WorkDone=OnWorkerNoIngredients,
         };
 
         WorkerState.GetState getState = GetState;
