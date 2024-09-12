@@ -20,6 +20,7 @@ public class ProductShopCard : MonoBehaviour
     
     public void SetAmountToBuy(string amount)
     {
+        if (string.IsNullOrEmpty(amount)) return;
         _amountToBuy = int.Parse(amount);
     }
 
@@ -27,7 +28,13 @@ public class ProductShopCard : MonoBehaviour
     {
         OnProductBought?.Invoke(_product,_product.ShopPrice, _amountToBuy);
     }
-
+    public void SetUp(ProductSO product)
+    {
+        _product = product;
+        _productNameText.text = _product.name;
+        _productIcon.sprite = _product.Icon;
+        _priceText.text = $"<color=red>{_product.ShopPrice}$";
+    }
     private void OnValidate()
     {
         if(_product != null) 

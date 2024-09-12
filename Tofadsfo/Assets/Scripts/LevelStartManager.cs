@@ -14,6 +14,7 @@ public class LevelStartManager : MonoBehaviour
     [SerializeField] TableProductsManagment _tableProductsManagment;
     [SerializeField] ClientSpawner _clientSpawner;
     [SerializeField] LevelTimeDisplay _levelTimeDisplay;
+    [SerializeField] ProductsShop _shop;
     private void Start()
     {
         _mouseInteractions.SetInteraction(false);
@@ -25,6 +26,7 @@ public class LevelStartManager : MonoBehaviour
             _levelInfoDisplay.Hide();
         }
 #endif
+        _shop.SetUpShop(_levelInfo);
         _levelTimeDisplay.SetTime(_levelInfo.LevelTimeInSecnods);
         _tableProductsManagment.SetUp(_levelInfo.AvailableProducts);
         _levelInfoDisplay.SetOrders(_levelInfo);
