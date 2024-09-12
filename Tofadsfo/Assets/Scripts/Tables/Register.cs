@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Register : MonoBehaviour
 {
-    public ProductSO Product => _product;
-    [SerializeField] ProductSO _product;
+    public Action<int> OnItemBought;
+    public ProductSO Product => _recipe.Result;
+    [SerializeField] RecipeSO _recipe;
     public Action OnOrderDelivered;
     public ClientQueue RegisterQueue => _queue;
 
@@ -33,6 +34,7 @@ public class Register : MonoBehaviour
     {
         _isOrderOnRegister = false;
         _isOrderRequested = false;
+        OnItemBought?.Invoke(_recipe.Price);
     }
     public void DeliverOrder()
     {
@@ -41,9 +43,9 @@ public class Register : MonoBehaviour
 
     private void OnValidate()
     {
-        if(_product != null) 
+        if(_recipe.Result != null) 
         {
-            _productIcon.sprite = _product.Icon;
+            _productIcon.sprite = _recipe.Result.Icon;
         }
     }
 }
