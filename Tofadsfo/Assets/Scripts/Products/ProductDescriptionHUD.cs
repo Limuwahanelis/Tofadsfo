@@ -10,6 +10,7 @@ public class ProductDescriptionHUD : MonoBehaviour
     [SerializeField] ProductSO _product;
     [SerializeField] TMP_Text _text;
     [SerializeField] ProductsStats _stats;
+    private int _productMaxAmount;
     private void OnValidate()
     {
         if(_product != null )
@@ -20,7 +21,19 @@ public class ProductDescriptionHUD : MonoBehaviour
 
     private void Start()
     {
+        _stats.OnCurrentProductAmountChanged += UpdateProduct;
         var (max, curr) = _stats.GetProductAmounts(_product);
+        _productMaxAmount = max;
         _text.text = $"{curr}/{max}";
+    }
+    private void UpdateProduct(ProductSO product,int amount)
+    {
+        if (product != _product) return;
+        _text.text= $"{amount}/{_productMaxAmount}";
+    }
+
+    private void OnDestroy()
+    {
+        _stats.OnCurrentProductAmountChanged -= UpdateProduct;
     }
 }

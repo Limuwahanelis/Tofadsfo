@@ -1,14 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ProductsStats : MonoBehaviour
 {
     public Action<ProductSO, int> OnCurrentProductAmountChanged;
-    [SerializeField] List<ProductSO> _products=new List<ProductSO>();
-    [SerializeField] List<int> _maxAmounts;
-    [SerializeField] List<int> _currentAmounts;
+    [SerializeField] LevelInfoSO _levelInfo;
+    [SerializeField] ProductSelect _productSelect;
+    private List<ProductSO> _products=new List<ProductSO>();
+    private List<int> _maxAmounts;
+    private List<int> _currentAmounts;
+    private void Awake()
+    {
+        _products = _levelInfo.AvailableProducts;
+        _productSelect.SetUp(_products);
+        _maxAmounts = _levelInfo.MaximumAmountOfIngredients;
+        _currentAmounts = _levelInfo.StartingAmountOfIngredients;
+    }
     /// <summary>
     /// 
     /// </summary>
@@ -25,10 +35,11 @@ public class ProductsStats : MonoBehaviour
         _currentAmounts[index] -= amount;
         OnCurrentProductAmountChanged?.Invoke(product, _currentAmounts[index]);
     }
-    public void OncreaseProductAmount(ProductSO product, int amount)
+    public void OnIcreaseProductAmount(ProductSO product, int amount)
     {
         int index = _products.IndexOf(product);
         _currentAmounts[index] += amount;
+        _currentAmounts[index] = math.clamp(_currentAmounts[index], 0, _maxAmounts[index]);
         OnCurrentProductAmountChanged?.Invoke(product, _currentAmounts[index]);
     }
 

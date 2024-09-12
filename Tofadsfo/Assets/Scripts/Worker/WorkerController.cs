@@ -12,14 +12,13 @@ public class WorkerController : MonoBehaviour
     [SerializeField] RecipeAssembly _associatedAssembler;
     [SerializeField] TableProductsManagment _tableProductsManagment;
     [SerializeField] Register _register;
-    private List<Vector2Int> _currentPath;
-    private bool _go = false;
 
     protected Dictionary<Type, WorkerState> _workerStates = new Dictionary<Type, WorkerState>();
     protected WorkerState _currenStatet;
     protected WorkerContext _context;
     private void Start()
     {
+        _nav.AssignRegisterAndAssembler(_register, _associatedAssembler);
         SetUpWorker();
 
     }
@@ -65,11 +64,5 @@ public class WorkerController : MonoBehaviour
         //if (_printState) Logger.Log(newState.GetType());
         _currenStatet.InterruptState();
         _currenStatet = newState;
-    }
-    public void SetPath(List<Vector2Int> path)
-    {
-        _currentPath = path;
-        
-        _go = true;
     }
 }

@@ -10,7 +10,6 @@ public class WorkerGoToAssemblerState : WorkerState
     private Vector2 _startPos;
     private float _lerp = 0;
     private float _timetoReachTarget;
-    private float _speed = 2;
     public static Type StateType { get => typeof(WorkerGoToAssemblerState); }
     public WorkerGoToAssemblerState(GetState function) : base(function)
     {
@@ -30,7 +29,7 @@ public class WorkerGoToAssemblerState : WorkerState
             }
             _startPos = _context.currentPath[_currentPositionIndex];
             _currentPositionIndex++;
-            _timetoReachTarget = Vector2.Distance(_startPos, _context.currentPath[_currentPositionIndex]) / _speed;
+            _timetoReachTarget = Vector2.Distance(_startPos, _context.currentPath[_currentPositionIndex]) / _context.speed;
             _lerp = 0;
         }
     }
@@ -40,7 +39,7 @@ public class WorkerGoToAssemblerState : WorkerState
         base.SetUpState(context);
         _currentPositionIndex = 0;
         _startPos = _context.currentPath[0];
-        _timetoReachTarget = Vector2.Distance(_startPos, _context.currentPath[1]) / _speed;
+        _timetoReachTarget = Vector2.Distance(_startPos, _context.currentPath[1]) / _context.speed;
     }
 
     public override void InterruptState()

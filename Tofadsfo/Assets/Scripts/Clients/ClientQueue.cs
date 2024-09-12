@@ -12,11 +12,15 @@ public class ClientQueue : MonoBehaviour
     public void SetQueuePlace(ClientQueuePlace place,bool istaken)
     {
         place.SetIsTaken(istaken);
-        OnPlaceFreed?.Invoke(place);
+        if(!istaken) OnPlaceFreed?.Invoke(place);
     }
     public int GetPlaceIndex(ClientQueuePlace place)
     {
         return _queuePlaces.IndexOf(place);
+    }
+    public bool HasFreePlace()
+    {
+        return _queuePlaces.Exists(x => x.Istaken == false);
     }
     public ClientQueuePlace GetFreePlace()
     {

@@ -6,49 +6,49 @@ using UnityEngine;
 
 public class TableProductsManagment : MonoBehaviour
 {
+    [SerializeField] ProductSO _emptyProduct;
     [SerializeField] ProductsStats _productsStats;
-    [SerializeField] List<ProductSO> _products = new List<ProductSO>();
+    [SerializeField] List<WorkerNavigation> _workersNavs;
     List<int> _tablesWithProduct=new List<int>();
     List<List<TableWithProducts>> _tables = new List<List<TableWithProducts>>();
+    private List<ProductSO> _products = new List<ProductSO>();
     private List<int> _notReservedProductsAmount;
-    private void Start()
+    public void SetUp(List<ProductSO> products)
     {
-        _notReservedProductsAmount=new List<int>();
-        for (int i=0;i<_products.Count;i++)
+        _products = products;
+        _notReservedProductsAmount = new List<int>();
+        for (int i = 0; i < _products.Count; i++)
         {
             _tablesWithProduct.Add(0);
             _tables.Add(new List<TableWithProducts>());
             _notReservedProductsAmount.Add(0);
         }
     }
-    public List<TableWithProducts> GetAllTablesWithProduct(ProductSO product)
-    {
-        int index = _products.IndexOf(product);
-        return _tables[index];
-    }
-    public void RemoveProductFromTable(ProductSO product, TableWithProducts table)
-    {
-        int index = _products.IndexOf(product);
-        if (!_tables[index].Contains(table)) return;
-        _tables[index].Remove(table);
-        for(int i=0;i<_products.Count;i++)
-        {
-            UpdateTables(i);
-        }
-        
-    }
+    //public List<TableWithProducts> GetAllTablesWithProduct(ProductSO product)
+    //{
+    //    int index = _products.IndexOf(product);
+    //    return _tables[index];
+    //}
     public void AddProductToATable(ProductSO product, TableWithProducts table)
     {
-
+        if (product == _emptyProduct && table.AssociatedProdct == _emptyProduct)  return;
         int index = _products.IndexOf(product);
         int indexProductToRemove=_products.IndexOf(table.AssociatedProdct);
+
         if (indexProductToRemove != -1)
         {
             if (_tables[indexProductToRemove].Contains(table))
             {
                 _tables[indexProductToRemove].Remove(table);
+                _notReservedProductsAmount[indexProductToRemove] -= table.CurrentProductAmount;
                 UpdateTables(indexProductToRemove);
             }
+        }
+        if (product == _emptyProduct)
+        {
+            UpdateTables(indexProductToRemove);
+            table.SetProductAmount(0);
+            return;
         }
         if (_tables[index].Contains(table))
         {
@@ -56,13 +56,19 @@ public class TableProductsManagment : MonoBehaviour
             return;
         }
         _tables[index].Add(table);
-        
         UpdateTables( index);
+        _notReservedProductsAmount[index] += table.CurrentProductAmount;
     }
-
+    public void UpdateWorkersnavigations(TableWithProducts table)
+    {
+        for(int i=0;i<_workersNavs.Count;i++) 
+        {
+            _workersNavs[i].SetPathsForTable(table);
+        }
+    }
     private void UpdateTables(int index)
     {
-        int total = _productsStats.GetProductAmounts(_products[index]).Item1;
+        int total = _productsStats.GetProductAmounts(_products[index]).Item2;
         int remainder = 0;
         int amountPertable = total;
         if (_tables[index].Count != 0)
@@ -94,16 +100,6 @@ public class TableProductsManagment : MonoBehaviour
 
             total -= amount;
             _tables[index][j].SetProductAmount(amount);
-        }
-    }
-    public void AssingProducts()
-    {
-        for(int i=0;i<_products.Count;i++) 
-        {
-            for(int j = 0; j < _tables[i].Count;j++) 
-            {
-                _notReservedProductsAmount[i] += _tables[i][j].CurrentProductAmount;
-            }
         }
     }
     public bool IsThereEnoughProductsForARecipe(RecipeSO.CraftingRecipeShort recipe)

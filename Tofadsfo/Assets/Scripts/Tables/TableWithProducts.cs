@@ -15,10 +15,15 @@ public class TableWithProducts : MonoBehaviour,IInteractable
     [SerializeField] SpriteRenderer _productSprite;
     [SerializeField] int _maxProductAmount;
     [SerializeField] TMP_Text _productAmountDisplay;
+    [SerializeField] TMP_Text _maxProductAmountDisplay;
     [SerializeField] ProductsStats _productStats;
     [SerializeField] TableProductsManagment _tableProductsManagment;
-    private ProductSO _associatedProduct;
+    [SerializeField] ProductSO _associatedProduct;
     private int _currentProductAmount;
+    private void Awake()
+    {
+        _maxProductAmountDisplay.text = _maxProductAmount.ToString();
+    }
     public void Interact()
     {
         ShowProductSelection();
@@ -39,6 +44,7 @@ public class TableWithProducts : MonoBehaviour,IInteractable
         //_tableProductsManagment.RemoveProductFromTable(product, this);
         _tableProductsManagment.AddProductToATable(product, this);
         _associatedProduct = product;
+        _tableProductsManagment.UpdateWorkersnavigations(this);
     }
     public void SetProductAmount(int amount)
     {

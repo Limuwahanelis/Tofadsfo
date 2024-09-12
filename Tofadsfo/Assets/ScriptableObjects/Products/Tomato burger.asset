@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df93c4e22196b946bfdc62d3f892a27, type: 3}
+  m_Name: Tomato burger
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: c683ea1279786e545b88d79d892f1967, type: 3}
+  _maxAmount: 0
+  _pathColor: {r: 0.8867924, g: 0, b: 0, a: 1}
