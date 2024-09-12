@@ -20,7 +20,7 @@ public class LevelEndDisplay : MonoBehaviour
         if(balance<0)
         {
             _balanceText.color = Color.red;
-            _balanceText.text =$"-{balance}$";
+            _balanceText.text =$"{balance}$";
             failed = true;
         }
         else

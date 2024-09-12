@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelEndManager : MonoBehaviour
 {
+    public Action OnLevelEnd;
     [SerializeField] List<WorkerController> _workers = new List<WorkerController>();
     [SerializeField] List<Register> _register= new List<Register>();
     [SerializeField] LevelEndDisplay _levelEndDisplay;
@@ -24,15 +25,20 @@ public class LevelEndManager : MonoBehaviour
             _register[i].OnItemBought += IncreaseMoney;
         }
     }
+    private void EndLevel()
+    {
+        Logger.Log($"Level end. earned {_earnedMoney}");
+        _balance = _moneyInfo.CurrentMoney - _levelInfoSO.GetMoneyRequiredForALevel();
+        _levelEndDisplay.SetUp(_moneyInfo.CurrentMoney, _levelInfoSO.GetMoneyRequiredForALevel(), _balance);
+        _levelEndDisplay.gameObject.SetActive(true);
+        OnLevelEnd?.Invoke();
+    }
     private void IncreaseNotWorkingWorkers()
     {
         _notWorkingWorkerCount++;
         if(_notWorkingWorkerCount==_workers.Count)
         {
-            Logger.Log($"Level end. earned {_earnedMoney}");
-            _balance = _moneyInfo.CurrentMoney- _levelInfoSO.GetMoneyRequiredForALevel();
-            _levelEndDisplay.SetUp(_moneyInfo.CurrentMoney,_levelInfoSO.GetMoneyRequiredForALevel(),_balance);
-            _levelEndDisplay.gameObject.SetActive(true);
+            EndLevel();
         }
     }
     private void IncreaseMoney(int money)
