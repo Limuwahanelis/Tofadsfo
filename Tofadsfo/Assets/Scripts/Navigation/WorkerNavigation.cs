@@ -40,20 +40,6 @@ public class WorkerNavigation : MonoBehaviour
         _workerRegister = register;
         _associateAssembler = assemlber;
     }
-    // Used by a button to show paths
-    public void DrawPaths()
-    {
-        for (int i = 0; i < _pathsFromRegisterToIngredients.Count; i++)
-        {
-            _pathDraw.SetPathColor(_registerPathColors[i]);
-            _pathDraw.DrawLine(_pathsFromRegisterToIngredients[i].path);
-        }
-        for (int i = 0; i < _pathsFromAssemblerToIngredients.Count; i++)
-        {
-            _pathDraw.SetPathColor(_assemblerPathColors[i]);
-            _pathDraw.DrawLine(_pathsFromAssemblerToIngredients[i].path);
-        }
-    }
     #region GetPaths
     /// <summary>
     /// 

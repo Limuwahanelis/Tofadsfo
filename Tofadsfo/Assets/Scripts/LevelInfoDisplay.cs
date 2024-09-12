@@ -11,6 +11,7 @@ public class LevelInfoDisplay : MonoBehaviour
     [SerializeField,SearchContext("t:OrderCard")] GameObject _orderCardPrefab;
     [SerializeField] GameObject _ordersLayout;
     [SerializeField] TMP_Text _requiredMoneyText;
+    [SerializeField] GameObject _canvas;
     int _moneyRequiredForLevel =0;
     public void SetOrders(LevelInfoSO levelInfo)
     {
@@ -25,10 +26,10 @@ public class LevelInfoDisplay : MonoBehaviour
     }
     public void Show()
     {
-        gameObject.SetActive(true);
+        _canvas.SetActive(true);
     }
     public void Hide()
     {
-        gameObject.SetActive(false);
+        _canvas.SetActive(false);
     }
 }

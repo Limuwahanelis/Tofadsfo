@@ -16,11 +16,9 @@ public class PathDrawing : MonoBehaviour
     [SerializeField] GameObject _LineDrawerPrefab;
     [SerializeField] GameObject _assemblerLinesHolder;
     [SerializeField] GameObject _registerLineHolder;
-    private List<LineRenderer> _lineRenderes=new List<LineRenderer>();
     private List<LineToTable> _linesFromAssemblerToProducts=new List<LineToTable>();
     private List<LineToTable> _linesFromRegisterToProducts=new List<LineToTable>();
     private List<ProductSO> _productsToShowLinesFor=new List<ProductSO>();
-    private int _lineIndex = 0;
     private Color _pathColor;
     #region Assembler paths
     public void CreateLineFromAssemblerToTable(List<Vector2Int> nodes,TableWithProducts table)
@@ -134,31 +132,5 @@ public class PathDrawing : MonoBehaviour
     public void SetPathColor(Color color)
     {
         _pathColor = color;
-    }
-    public void ClearPahts()
-    {
-        for(int i=0;i<_lineRenderes.Count;i++) 
-        {
-            Destroy(_lineRenderes[i].gameObject);
-        }
-        _lineRenderes.Clear();
-    }
-    public void DrawLine(List<Vector2Int> nodes)
-    {
-        LineRenderer lineRenderer = Instantiate(_LineDrawerPrefab).GetComponent<LineRenderer>();
-        _lineRenderes.Add(lineRenderer);
-        lineRenderer.positionCount = 0;
-        lineRenderer.startColor = _pathColor;
-        lineRenderer.endColor = _pathColor;
-        lineRenderer.positionCount = nodes.Count;
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            lineRenderer.SetPosition(i, new Vector3(nodes[i].x, nodes[i].y, -0.05f));
-        }
-        _lineIndex++;
-    }
-    public void HidePath()
-    {
-        //_lineRenderer.positionCount = 0;
     }
 }
