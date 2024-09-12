@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ClientController : MonoBehaviour
 {
+    public Action OnClientServed;
     [SerializeField] ProductSO _requestedProduct;
     [SerializeField] ClientQueue _queue;
     [SerializeField] float _timeToDeliverFood;
@@ -15,6 +16,7 @@ public class ClientController : MonoBehaviour
     protected Dictionary<Type, ClientState> _clientStates = new Dictionary<Type, ClientState>();
     protected ClientState _currenStatet;
     protected ClientContext _context;
+    private List<Transform> _pathToDoor;
     //Vector2Int 
     //bool _isMovingToRegister;
 
@@ -26,9 +28,10 @@ public class ClientController : MonoBehaviour
     {
         _currenStatet.Update();
     }
-    public void SetUp(int number,Register register)
+    public void SetUp(int number,Register register,List<Transform> pathToDoor)
     {
         _queue = register.RegisterQueue;
+        _pathToDoor = pathToDoor;
         test_text.text = number.ToString();
         _register = register;
     }
@@ -43,6 +46,8 @@ public class ClientController : MonoBehaviour
             queue= _queue,
             transform=transform,
             register= _register,
+            pathToDoors=_pathToDoor,
+            ServeClient=OnClientServed,
         };
 
         ClientState.GetState getState = GetState;

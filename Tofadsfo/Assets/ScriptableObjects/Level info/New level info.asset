@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: New level info
   m_EditorClassIdentifier: 
   _startingMoney: 25
+  _levelTimeInSeconds: 3
   _orders:
   - {fileID: 11400000, guid: 378a568abf11b1740b6394c2ad80e66d, type: 2}
-  _amountOfOrders: 03000000
+  _amountOfOrders: 14000000
   _availableProducts:
   - {fileID: 11400000, guid: 6fae8a9a306948544b45cd93802797d2, type: 2}
   - {fileID: 11400000, guid: 1a564bece0c19cb418c265bd482da67f, type: 2}
-  - {fileID: 11400000, guid: 4bc2a19fe0b34094aa07c79099634d22, type: 2}
-  _startingAmountOfIngredients: 080000000800000000000000
-  _maximumAmountOfIngredients: 0f0000000f00000007000000
+  _startingAmountOfIngredients: 0800000008000000
+  _maximumAmountOfIngredients: 0f0000000f000000

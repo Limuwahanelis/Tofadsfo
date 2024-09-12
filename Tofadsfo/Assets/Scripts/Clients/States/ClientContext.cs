@@ -10,4 +10,7 @@ public class ClientContext
     public ClientQueuePlace assigendPlaceInQueue;
     public Transform transform;
     public Register register;
+    public float speed=3f;
+    public List<Transform> pathToDoors;
+    public Action ServeClient;
 }

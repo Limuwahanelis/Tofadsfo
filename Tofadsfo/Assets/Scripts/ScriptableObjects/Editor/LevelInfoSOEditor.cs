@@ -12,6 +12,7 @@ public class LevelInfoSOEditor: Editor
     SerializedProperty _availableProducts;
     SerializedProperty _startingAmountOfIngredients;
     SerializedProperty _maximumAmountOfIngredients;
+    SerializedProperty _levelTime;
     int _ordersNum = 0;
     int _ordersAmountNum;
     int _productsNum;
@@ -19,6 +20,7 @@ public class LevelInfoSOEditor: Editor
     int _maximumIngredientsNum;
     private void OnEnable()
     {
+        _levelTime = serializedObject.FindProperty("_levelTimeInSeconds");
         _orders = serializedObject.FindProperty("_orders");
         _amountOfOrders = serializedObject.FindProperty("_amountOfOrders");
         _money = serializedObject.FindProperty("_startingMoney");
@@ -30,6 +32,7 @@ public class LevelInfoSOEditor: Editor
     {
         //base.OnInspectorGUI();
         serializedObject.Update();
+        EditorGUILayout.PropertyField(_levelTime);
         EditorGUILayout.PropertyField(_money);
         #region Orders
         EditorGUI.BeginChangeCheck();

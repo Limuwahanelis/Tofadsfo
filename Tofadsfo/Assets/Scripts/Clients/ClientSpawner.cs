@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,11 +6,12 @@ using UnityEngine;
 
 public class ClientSpawner : MonoBehaviour
 {
-    [SerializeField] float _levelTime;
-    [SerializeField] ClientQueue _queue;
+    public Action<ClientController> OnClientSpawned;
+    public Action OnClientSkipped;
     [SerializeField] GameObject _clientPrefab;
     [SerializeField] Transform _clientSpawnTran;
     [SerializeField] List<Register> _registers;
+    [SerializeField] List<Transform> _pathToDoors;
     [SerializeField] bool _startSpawn = false;
     float _timetoSpawnClient;
     private List<RecipeSO> _orders;
@@ -20,6 +22,7 @@ public class ClientSpawner : MonoBehaviour
     private float _timer = 0;
     private int _productIndex = 0;
     private int _registerIndex = 0;
+    private float _levelTime;
     private void Start()
     {
         
@@ -68,7 +71,8 @@ public class ClientSpawner : MonoBehaviour
                 _registerIndex++;
                 if (_registerIndex >= _sortedRegisters[_productIndex].Count)
                 {
-                    _spawnedClientsPerOrder[_productIndex]++;// TODO: count this cient as missed
+                    _spawnedClientsPerOrder[_productIndex]++;
+                    OnClientSkipped?.Invoke();
                     _registerIndex = 0;
                     _productIndex++;
                     if (_productIndex >= _orders.Count)
@@ -109,11 +113,12 @@ public class ClientSpawner : MonoBehaviour
         {
             totalOrders+= _amountOfOrders[i];
         }
-        
+        _levelTime = levelInfo.LevelTimeInSecnods;
         _timetoSpawnClient = _levelTime / totalOrders;
 
 
     }
+    // used by a button
     public void SetRegisters()
     {
         for (int i = 0; i < _registers.Count; i++)
@@ -129,6 +134,7 @@ public class ClientSpawner : MonoBehaviour
             }
         }
     }
+    // used by a button
     public void SetSpawn(bool value)
     {
         _startSpawn = value;
@@ -136,6 +142,7 @@ public class ClientSpawner : MonoBehaviour
     public void SpawnClient(int num,Register register)
     {
         ClientController client= Instantiate(_clientPrefab, _clientSpawnTran.position,_clientPrefab.transform.rotation).GetComponent<ClientController>();
-        client.SetUp(num, register);
+        client.SetUp(num, register, _pathToDoors);
+        OnClientSpawned?.Invoke(client);
     }
 }
