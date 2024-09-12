@@ -6,16 +6,27 @@ using UnityEngine;
 public class LevelEndManager : MonoBehaviour
 {
     public Action OnLevelEnd;
-    [SerializeField] List<WorkerController> _workers = new List<WorkerController>();
-    [SerializeField] List<Register> _register= new List<Register>();
+    [SerializeField] LevelInfoSO _levelInfoSO;
     [SerializeField] LevelEndDisplay _levelEndDisplay;
     [SerializeField] MoneyInfo _moneyInfo;
-    [SerializeField] LevelInfoSO _levelInfoSO;
+    [SerializeField] ClientSpawner _clientSpawner;
+    [SerializeField] List<WorkerController> _workers = new List<WorkerController>();
+    [SerializeField] List<Register> _register= new List<Register>();
+    private List<ClientController> _clients = new List<ClientController>();
     private int _notWorkingWorkerCount = 0;
     private int _earnedMoney = 0;
     private int _balance = 0;
+    private int _totalClientsNum;
+    private int _skippedClinetsNum;
+    private int _servedClinetsNum;
     private void Start()
     {
+        _clientSpawner.OnClientSkipped += IncreaseSkippedClients;
+        _clientSpawner.OnClientSpawned += AddClient;
+        for(int i=0;i<_levelInfoSO.AmountOfOrders.Count;i++)
+        {
+            _totalClientsNum += _levelInfoSO.AmountOfOrders[i];
+        }
         for(int i=0;i<_workers.Count;i++)
         {
             _workers[i].OnWorkerNoIngredients += IncreaseNotWorkingWorkers;
@@ -33,6 +44,27 @@ public class LevelEndManager : MonoBehaviour
         _levelEndDisplay.gameObject.SetActive(true);
         OnLevelEnd?.Invoke();
     }
+    private void IncreaseSkippedClients()
+    {
+        _skippedClinetsNum++;
+        if(_skippedClinetsNum+_servedClinetsNum==_totalClientsNum)
+        {
+            EndLevel();
+        }
+    }
+    private void AddClient(ClientController client)
+    {
+        _clients.Add(client);
+        client.OnClientServed += IncreaseServedClients;
+    }
+    private void IncreaseServedClients()
+    {
+        _servedClinetsNum++;
+        if (_skippedClinetsNum + _servedClinetsNum == _totalClientsNum)
+        {
+            EndLevel();
+        }
+    }
     private void IncreaseNotWorkingWorkers()
     {
         _notWorkingWorkerCount++;
@@ -49,6 +81,10 @@ public class LevelEndManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        for(int i=0;i<_clients.Count;i++)
+        {
+            _clients[i].OnClientServed -= IncreaseServedClients;
+        }
         for (int i = 0; i < _workers.Count; i++)
         {
             _workers[i].OnWorkerNoIngredients -= IncreaseNotWorkingWorkers;

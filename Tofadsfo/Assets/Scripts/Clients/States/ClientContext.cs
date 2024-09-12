@@ -12,4 +12,5 @@ public class ClientContext
     public Register register;
     public float speed=3f;
     public List<Transform> pathToDoors;
+    public Action ServeClient;
 }

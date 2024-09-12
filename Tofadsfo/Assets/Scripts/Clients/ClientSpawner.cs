@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class ClientSpawner : MonoBehaviour
 {
+    public Action<ClientController> OnClientSpawned;
+    public Action OnClientSkipped;
     [SerializeField] GameObject _clientPrefab;
     [SerializeField] Transform _clientSpawnTran;
     [SerializeField] List<Register> _registers;
@@ -68,7 +71,8 @@ public class ClientSpawner : MonoBehaviour
                 _registerIndex++;
                 if (_registerIndex >= _sortedRegisters[_productIndex].Count)
                 {
-                    _spawnedClientsPerOrder[_productIndex]++;// TODO: count this cient as missed
+                    _spawnedClientsPerOrder[_productIndex]++;
+                    OnClientSkipped?.Invoke();
                     _registerIndex = 0;
                     _productIndex++;
                     if (_productIndex >= _orders.Count)
@@ -139,5 +143,6 @@ public class ClientSpawner : MonoBehaviour
     {
         ClientController client= Instantiate(_clientPrefab, _clientSpawnTran.position,_clientPrefab.transform.rotation).GetComponent<ClientController>();
         client.SetUp(num, register, _pathToDoors);
+        OnClientSpawned?.Invoke(client);
     }
 }

@@ -18,7 +18,7 @@ public class ClientAtDoorState : ClientState
     public override void SetUpState(ClientContext context)
     {
         base.SetUpState(context);
-        Logger.Log("Exit");
+        _context.ServeClient();
     }
 
     public override void InterruptState()

@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ClientController : MonoBehaviour
 {
+    public Action OnClientServed;
     [SerializeField] ProductSO _requestedProduct;
     [SerializeField] ClientQueue _queue;
     [SerializeField] float _timeToDeliverFood;
@@ -46,6 +47,7 @@ public class ClientController : MonoBehaviour
             transform=transform,
             register= _register,
             pathToDoors=_pathToDoor,
+            ServeClient=OnClientServed,
         };
 
         ClientState.GetState getState = GetState;
