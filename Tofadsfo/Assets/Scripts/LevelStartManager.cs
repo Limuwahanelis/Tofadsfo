@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LevelStartManager : MonoBehaviour
 {
+#if UNITY_EDITOR
+    [SerializeField, Header("DEBUG")] bool _debug;
+#endif
+    [Space]
     [SerializeField] LevelInfoSO _levelInfo;
     [SerializeField] LevelInfoDisplay _levelInfoDisplay;
     [SerializeField] PlayerMouseInteractions _mouseInteractions;
@@ -12,9 +16,17 @@ public class LevelStartManager : MonoBehaviour
     private void Start()
     {
         _mouseInteractions.SetInteraction(false);
+        _levelInfoDisplay.Show();
+#if UNITY_EDITOR
+        if (_debug)
+        {
+            _mouseInteractions.SetInteraction(true);
+            _levelInfoDisplay.Hide();
+        }
+#endif
         _tableProductsManagment.SetUp(_levelInfo.AvailableProducts);
         _levelInfoDisplay.SetOrders(_levelInfo);
-        _levelInfoDisplay.Show();
+       
     }
 
     public void SetUpSpawner()
