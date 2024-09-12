@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="New level info",menuName ="Level info")]
@@ -18,5 +19,16 @@ public class LevelInfoSO : ScriptableObject
     [SerializeField] List<ProductSO> _availableProducts;
     [SerializeField] List<int> _startingAmountOfIngredients;
     [SerializeField] List<int> _maximumAmountOfIngredients;
+
+    public int GetMoneyRequiredForALevel()
+    {
+        int moneyForLevel = 0;
+        for (int i = 0; i < Orders.Count; i++)
+        {
+            moneyForLevel += Orders[i].Price * AmountOfOrders[i];
+        }
+        moneyForLevel = ((int)math.ceil(moneyForLevel * 0.9f));
+        return moneyForLevel;
+    }
 
 }

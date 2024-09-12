@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelEndManager : MonoBehaviour
 {
     [SerializeField] List<WorkerController> _workers = new List<WorkerController>();
     [SerializeField] List<Register> _register= new List<Register>();
+    [SerializeField] LevelEndDisplay _levelEndDisplay;
     [SerializeField] MoneyInfo _moneyInfo;
+    [SerializeField] LevelInfoSO _levelInfoSO;
     private int _notWorkingWorkerCount = 0;
     private int _earnedMoney = 0;
+    private int _balance = 0;
     private void Start()
     {
         for(int i=0;i<_workers.Count;i++)
@@ -26,6 +30,9 @@ public class LevelEndManager : MonoBehaviour
         if(_notWorkingWorkerCount==_workers.Count)
         {
             Logger.Log($"Level end. earned {_earnedMoney}");
+            _balance = _moneyInfo.CurrentMoney- _levelInfoSO.GetMoneyRequiredForALevel();
+            _levelEndDisplay.SetUp(_moneyInfo.CurrentMoney,_levelInfoSO.GetMoneyRequiredForALevel(),_balance);
+            _levelEndDisplay.gameObject.SetActive(true);
         }
     }
     private void IncreaseMoney(int money)
