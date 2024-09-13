@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 75da6fdb7d950e941849582d5ad683ad
+guid: aa7c4d0b596596f4a8bb6dc97efa2a8a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: icons set-Sheet_0
+      name: icons set-Sheet 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e215ddb696075e4480c0cd017534574
-      internalID: 571353586
+      spriteID: c230302bcc81eb64a950f691ffa168ac
+      internalID: 403433309
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: icons set-Sheet_1
+      name: icons set-Sheet 1_1
       rect:
         serializedVersion: 2
         x: 32
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00328fcb88815974d893a53e356f9ad0
-      internalID: 287899378
+      spriteID: 2ff61957a2d10f24da819c82bfe6c81f
+      internalID: 1498279058
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: icons set-Sheet_2
+      name: icons set-Sheet 1_2
       rect:
         serializedVersion: 2
         x: 64
@@ -153,8 +153,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e3e00d9a17ffc140822c267c4bb40d4
-      internalID: 1816701766
+      spriteID: 73a8bcf5469a14443a53bb1f5aa6fee5
+      internalID: 451160293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: icons set-Sheet 1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0875dd647f2db04887088c3e7598cd9
+      internalID: 2115629365
       vertices: []
       indices: 
       edges: []
@@ -170,9 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      icons set-Sheet_0: 571353586
-      icons set-Sheet_1: 287899378
-      icons set-Sheet_2: 1816701766
+      icons set-Sheet 1_0: 403433309
+      icons set-Sheet 1_1: 1498279058
+      icons set-Sheet 1_2: 451160293
+      icons set-Sheet 1_3: 2115629365
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
