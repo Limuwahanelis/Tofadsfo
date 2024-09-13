@@ -5,8 +5,11 @@ using UnityEngine.Events;
 
 public class ConversationStartOnStart : ConversationStart
 {
-    [SerializeField] UnityEvent OnStart;
-    [SerializeField] UnityEvent OnConvoEnd;
+    
+    private void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +18,7 @@ public class ConversationStartOnStart : ConversationStart
     }
     private void FireStart()
     {
-        OnStart?.Invoke();
+        OnConvoStart?.Invoke();
         _convoMan.OnConversationEnded += FireEndEvent;
         StartConversation();
     }

@@ -38,7 +38,7 @@ public class TableWithProducts : MonoBehaviour,IInteractable
         _productAmountDisplay.text = _currentProductAmount.ToString();
         return _associatedProduct;
     }
-    public void SetProduct(ProductSO product)
+    public virtual void SetProduct(ProductSO product)
     {
         _productSprite.sprite = product.Icon;
         //_tableProductsManagment.RemoveProductFromTable(product, this);

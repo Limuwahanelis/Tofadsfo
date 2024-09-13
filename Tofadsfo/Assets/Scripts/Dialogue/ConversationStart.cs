@@ -8,15 +8,22 @@ using TMPro;
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(NPCConversation))]
 public class ConversationStart : MonoBehaviour
 {
     [SerializeField] bool _useEvent;
+    [SerializeField, ConditionalField("_useEvent")] TutorialEventSO _tutorialStep;
     [SerializeField] protected NPCConversation _conversation;
     [SerializeField] protected ConversationManager _convoMan;
-    [SerializeField] TMP_SpriteAsset _spriteAsset;
+    [SerializeField] protected UnityEvent OnConvoEnd;
+    [SerializeField] protected UnityEvent OnConvoStart;
     private bool _conversationFinished;
+    private void Awake()
+    {
+        if(_useEvent)_tutorialStep.OnStepCompleted += StartConversation;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,20 +33,15 @@ public class ConversationStart : MonoBehaviour
     public void StartConversation()
     {
         if (_conversationFinished) return;
-
-        if(_spriteAsset!=null) _convoMan.DialogueText.spriteAsset = _spriteAsset;
-        _convoMan.OnConversationStarted += StopPlayerControls;
         _convoMan.OnConversationEnded += ConversationFinished;
         _convoMan.StartConversation(_conversation);
+        if(_useEvent)_tutorialStep.OnStepCompleted -= StartConversation;
     }
     protected void ConversationFinished()
     {
         _conversationFinished = true;
+        OnConvoEnd?.Invoke();
         _convoMan.OnConversationEnded -= ConversationFinished;
-    }
-    private void StopPlayerControls()
-    {
-        _convoMan.OnConversationStarted -= StopPlayerControls;
     }
     private void OnValidate()
     {
@@ -47,5 +49,9 @@ public class ConversationStart : MonoBehaviour
         {
             _conversation = GetComponent<NPCConversation>();
         }
+    }
+    private void OnDestroy()
+    {
+        if (_useEvent) _tutorialStep.OnStepCompleted -= StartConversation;
     }
 }
