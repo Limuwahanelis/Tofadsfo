@@ -1,0 +1,8 @@
+table numbers
+
+current num
+2CFF00
+
+max capacity
+FF6600
+
