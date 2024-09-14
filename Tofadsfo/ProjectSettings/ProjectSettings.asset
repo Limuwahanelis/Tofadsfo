@@ -563,7 +563,20 @@ PlayerSettings:
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    EmbeddedLinux: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    GameCoreXboxOne: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    Nintendo Switch: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    PS4: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    PS5: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    QNX: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    Stadia: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    Standalone: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    VisionOS: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    WebGL: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    XboxOne: MYBOX_DISABLE_INSPECTOR_OVERRIDE
+    tvOS: MYBOX_DISABLE_INSPECTOR_OVERRIDE
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

@@ -33,8 +33,6 @@ public class ProductSelect : MonoBehaviour
         RectTransform tra = _buttonsHolder.GetComponent<RectTransform>();
         tra.sizeDelta = new Vector2(tra.sizeDelta.x, (_products.Count+1) * 50);
         _buttonsHolder.GetComponent<RectTransform>().sizeDelta = tra.sizeDelta;
-        //Rect rect = gameObject.GetComponent<RectTransform>().rect;
-        //rect.height=
     }
     private void OnDestroy()
     {

@@ -7,6 +7,7 @@ public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] RaycastFromCamera _raycastCam;
     [SerializeField] PlayerMouseInteractions _mouseInteractions;
+    [SerializeField] PauseSetter _pauseSetter;
     public void OnMousePos(InputValue inputValue)
     {
         HelperClass.SetMousePos(inputValue.Get<Vector2>());
@@ -15,5 +16,9 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnClick()
     {
         _mouseInteractions.TryPress();
+    }
+    public void OnPause()
+    {
+        _pauseSetter.SetPause(!PauseSettings.IsGamePaused);
     }
 }
