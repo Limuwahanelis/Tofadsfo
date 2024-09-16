@@ -13,12 +13,12 @@ public class ProductsShop : MonoBehaviour
 
     private void Awake()
     {
-        _productCards = _cardHolder.GetComponentsInChildren<ProductShopCard>().ToList();
+        //_productCards = _cardHolder.GetComponentsInChildren<ProductShopCard>().ToList();
 
-        foreach (ProductShopCard card in _productCards)
-        {
-            card.OnProductBought += BuyProduct;
-        }
+        //foreach (ProductShopCard card in _productCards)
+        //{
+        //    card.OnProductBought += BuyProduct;
+        //}
     }
     public void SetUpShop(LevelInfoSO levelInfo)
     {
@@ -46,8 +46,21 @@ public class ProductsShop : MonoBehaviour
     }
     private void BuyProduct(ProductSO product,int price,int amount)
     {
-        _moneyInfo.ReduceMoney(price*amount);
-        _productsStats.OnIcreaseProductAmount(product, amount);
+        int newAmount = amount;
+        if( _moneyInfo.CurrentMoney<price*amount)
+        {
+            for(int i=0;i<=amount;i++)
+            {
+                if(i* price > _moneyInfo.CurrentMoney)
+                {
+                    i--;
+                    newAmount = i;
+                    break;
+                }
+            }
+        }
+        _moneyInfo.ReduceMoney(price* newAmount);
+        _productsStats.OnIcreaseProductAmount(product, newAmount);
     }
     private void OnDestroy()
     {

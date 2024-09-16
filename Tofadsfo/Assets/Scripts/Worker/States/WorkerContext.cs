@@ -15,6 +15,6 @@ public class WorkerContext
     public ProductSO takenProduct;
     public TableProductsManagment tableProductsManagment;
     public Register register;
-    public float speed=6;
+    public float speed=6 * PauseSettings.TimeSpeed;
     
 }

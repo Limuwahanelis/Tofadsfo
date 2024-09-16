@@ -2,16 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ClientSpawner : MonoBehaviour
 {
+    public Action<RecipeSO> OnAllCientsFromOrder;
     public Action<ClientController> OnClientSpawned;
     public Action OnClientSkipped;
     [SerializeField] GameObject _clientPrefab;
     [SerializeField] Transform _clientSpawnTran;
     [SerializeField] List<Register> _registers;
-    [SerializeField] List<Transform> _pathToDoors;
+    [SerializeField] Transform _door;
+    [SerializeField] LevelTimeDisplay _levelTimeDisplay;
     [SerializeField] bool _startSpawn = false;
     float _timetoSpawnClient;
     private List<RecipeSO> _orders;
@@ -20,21 +23,35 @@ public class ClientSpawner : MonoBehaviour
     private List<List<int>> _clientsPerRegisterNum=new List<List<int>>();
     private List<List<Register>> _sortedRegisters=new List<List<Register>>();
     private float _timer = 0;
+    private float _remainingTime = 0;
     private int _productIndex = 0;
     private int _registerIndex = 0;
     private float _levelTime;
+    private bool countTime = false;
     private void Start()
     {
         
     }
     private void Update()
     {
+        if (countTime)
+        {
+            _remainingTime -= (Time.deltaTime * PauseSettings.TimeSpeed);
+            _remainingTime = math.clamp(_remainingTime, 0, _levelTime);
+            if(_remainingTime<0)
+            {
+                countTime = false;
+            }
+            _levelTimeDisplay.SetRemainingTime(_remainingTime);
+        }
         if (!_startSpawn) return;
-        _timer += Time.deltaTime;
-        if(_timer>=_timetoSpawnClient)
+        _timer += Time.deltaTime * PauseSettings.TimeSpeed;
+
+        if (_timer>=_timetoSpawnClient)
         {
             if(_spawnedClientsPerOrder[_productIndex] == _amountOfOrders[_productIndex])
             {
+                OnAllCientsFromOrder?.Invoke(_orders[_productIndex]);
                 int orderIndexLeftWithClients = -1;
                 // Search for orders which have clients left.
                 for (int i = 0; i < _spawnedClientsPerOrder.Count; i++)
@@ -56,6 +73,7 @@ public class ClientSpawner : MonoBehaviour
                     if (orderIndexLeftWithClients == -1) // No order left with clients.
                     {
                         _startSpawn = false;
+                        //_levelTimeDisplay.SetRemainingTime(0);
                         return;
                     }
                     else
@@ -121,7 +139,7 @@ public class ClientSpawner : MonoBehaviour
     // used by a button
     public void SetRegisters()
     {
-        for (int i = 0; i < _registers.Count; i++)
+        for (int i = 0; i < _orders.Count; i++)
         {
             List<Register> list = _registers.Where(x => x.Product == _orders[i].Result).ToList();
             _sortedRegisters[i]=list;
@@ -137,12 +155,15 @@ public class ClientSpawner : MonoBehaviour
     // used by a button
     public void SetSpawn(bool value)
     {
+        _remainingTime = _levelTime;
+            countTime = value;
         _startSpawn = value;
     }
     public void SpawnClient(int num,Register register)
     {
         ClientController client= Instantiate(_clientPrefab, _clientSpawnTran.position,_clientPrefab.transform.rotation).GetComponent<ClientController>();
-        client.SetUp(num, register, _pathToDoors);
+        List<Vector2> pahtTODoor = new List<Vector2>() {new Vector2() };
+        client.SetUp(num, register, _door);
         OnClientSpawned?.Invoke(client);
     }
 }

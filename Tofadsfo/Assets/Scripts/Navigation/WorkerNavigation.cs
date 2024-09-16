@@ -17,6 +17,10 @@ public class WorkerNavigation : MonoBehaviour
     [SerializeField] AStarPathfinding _pathfinding;
     [SerializeField] List<ProductSO> _productsOrder;
     [SerializeField] List<Transform> _obstacles = new List<Transform>();
+    [SerializeField] Transform obstacleHolder;
+    [SerializeField] Transform _tablesHolder;
+    [SerializeField] Transform _registerHolder;
+    [SerializeField] Transform _assemblerHolder;
     private List<Vector2Int> _pathFromRegisterToAsembler;
     private List<PathWithProduct> _pathsFromRegisterToIngredients= new List<PathWithProduct>();
     private List<PathWithProduct> _pathsFromAssemblerToIngredients = new List<PathWithProduct>();
@@ -28,6 +32,25 @@ public class WorkerNavigation : MonoBehaviour
         public TableWithProducts table;
         public ProductSO product;
         public List<Vector2Int> path;
+    }
+    private void Awake()
+    {
+        for(int i=0;i<_tablesHolder.childCount;i++) 
+        {
+            _obstacles.Add(_tablesHolder.GetChild(i));
+        }
+        for(int i=0;i<_registerHolder.childCount;i++)
+        {
+            _obstacles.Add( _registerHolder.GetChild(i));
+        }
+        for(int i=0;i<_assemblerHolder.childCount;i++) 
+        {
+            _obstacles.Add(_assemblerHolder.GetChild(i));
+        }
+        for(int i=0;i<obstacleHolder.childCount;i++) 
+        {
+            _obstacles.Add(obstacleHolder.GetChild(i));
+        }
     }
     private void Start()
     {

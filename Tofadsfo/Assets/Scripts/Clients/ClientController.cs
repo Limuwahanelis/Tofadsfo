@@ -16,7 +16,7 @@ public class ClientController : MonoBehaviour
     protected Dictionary<Type, ClientState> _clientStates = new Dictionary<Type, ClientState>();
     protected ClientState _currenStatet;
     protected ClientContext _context;
-    private List<Transform> _pathToDoor;
+    private Transform _door;
     //Vector2Int 
     //bool _isMovingToRegister;
 
@@ -28,10 +28,10 @@ public class ClientController : MonoBehaviour
     {
         _currenStatet.Update();
     }
-    public void SetUp(int number,Register register,List<Transform> pathToDoor)
+    public void SetUp(int number,Register register,Transform door)
     {
         _queue = register.RegisterQueue;
-        _pathToDoor = pathToDoor;
+        _door = door;
         test_text.text = number.ToString();
         _register = register;
     }
@@ -46,7 +46,7 @@ public class ClientController : MonoBehaviour
             queue= _queue,
             transform=transform,
             register= _register,
-            pathToDoors=_pathToDoor,
+            door=_door,
             ServeClient=OnClientServed,
         };
 

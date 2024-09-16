@@ -12,11 +12,11 @@ public class LevelTimeDisplay : MonoBehaviour
     private bool _countDown = false;
     private void Update()
     {
-        if (!_countDown) return;
-        _remainingTime-=Time.deltaTime;
-        _remainingTime = math.clamp(_remainingTime, 0, _startingTime);
-        _remainingTimeText.text = FormatTime();
-        if (_remainingTime <= 0) _countDown = false;
+        //if (!_countDown) return;
+        //_remainingTime-=(Time.deltaTime*PauseSettings.TimeSpeed);
+        //_remainingTime = math.clamp(_remainingTime, 0, _startingTime);
+        //_remainingTimeText.text = FormatTime();
+        //if (_remainingTime <= 0) _countDown = false;
     }
     public void StartCoundown()
     {
@@ -25,6 +25,11 @@ public class LevelTimeDisplay : MonoBehaviour
     public void SetTime(float time)
     {
         _startingTime = time;
+        _remainingTime = time;
+        _remainingTimeText.text = FormatTime();
+    }
+    public void SetRemainingTime(float time)
+    {
         _remainingTime = time;
         _remainingTimeText.text = FormatTime();
     }

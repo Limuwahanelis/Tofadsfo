@@ -51,5 +51,9 @@ public class TableWithProducts : MonoBehaviour,IInteractable
         _currentProductAmount = amount;
         _productAmountDisplay.text = _currentProductAmount.ToString();
     }
+    private void OnValidate()
+    {
+        _maxProductAmountDisplay.text=_maxProductAmount.ToString();
+    }
 
 }

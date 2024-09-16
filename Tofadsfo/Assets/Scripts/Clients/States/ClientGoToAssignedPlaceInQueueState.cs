@@ -17,7 +17,7 @@ public class ClientGoToAssignedPlaceInQueueState : ClientState
     public override void Update()
     {
         _context.transform.position = Vector2.Lerp(_startPos, _context.assigendPlaceInQueue.transform.position, _lerp / _timetoReachTarget);
-        _lerp = _lerp + Time.deltaTime;
+        _lerp = _lerp + Time.deltaTime * PauseSettings.TimeSpeed;
         if (_lerp / _timetoReachTarget > 1)
         {
             _context.transform.position = _context.assigendPlaceInQueue.transform.position;

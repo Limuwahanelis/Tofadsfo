@@ -10,13 +10,13 @@ public class PlayerMouseInteractions : MonoBehaviour
     private bool _closeProductsMenu=true;
     private Vector3 _productsMenuPos;
     private bool _canInteract=true;
-
     public void SetInteraction(bool value)
     {
         _canInteract= value;
     }
     public void TryPress()
     {
+        if(PauseSettings.IsGamePaused) return;
         if (!_canInteract) return;
         Vector3 point;
         _interactable=_cameraRaycast.Raycast(out point,out float width);

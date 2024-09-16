@@ -24,7 +24,6 @@ public class WorkerAtAssemblerState : WorkerState
         {
             _context.takenProduct= _context.associatedAssembler.Assemble();
             _context.currentPath=_context.navigation.GetPathFromAssemblerToregister();
-            Logger.Log("Assemble");
             ChangeState(WorkerGoToRegisterState.StateType);
         }
         else
