@@ -12,6 +12,8 @@ public class LevelEndDisplay : MonoBehaviour
     [SerializeField] TMP_Text _balanceText;
     [SerializeField] GameObject _completeText;
     [SerializeField] GameObject _failText;
+    [SerializeField] GameObject _NextlevelButton;
+    [SerializeField] bool _lastlevel = false;
     private bool failed = false;
     public void SetUp(int money,int rent,int balance)
     {
@@ -28,8 +30,10 @@ public class LevelEndDisplay : MonoBehaviour
             _balanceText.color = Color.green;
             _balanceText.text = $"+{balance}$";
             failed = false;
+            
         }
-       
+        if(!_lastlevel) _NextlevelButton.SetActive(!failed);
+        
     }
     void OnEnable()
     {

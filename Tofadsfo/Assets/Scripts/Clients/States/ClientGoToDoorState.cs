@@ -18,19 +18,13 @@ public class ClientGoToDoorState : ClientState
 
     public override void Update()
     {
-        _context.transform.position = Vector2.Lerp(_startPos, _context.pathToDoors[_targetindex].position, _lerp / _timetoReachTarget);
-        _lerp = _lerp + Time.deltaTime;
+        _context.transform.position = Vector2.Lerp(_startPos, _context.door.position, _lerp / _timetoReachTarget);
+        _lerp = _lerp + Time.deltaTime*PauseSettings.TimeSpeed;
         if (_lerp / _timetoReachTarget > 1)
         {
-            if (_targetindex >= _context.pathToDoors.Count - 1)
-            {
-                ChangeState(ClientAtDoorState.StateType);
-                return;
-            }
-            _startPos = _context.pathToDoors[_targetindex].position;
-            _targetindex++;
-            _timetoReachTarget = Vector2.Distance(_startPos, _context.pathToDoors[_targetindex].position) / _context.speed;
-            _lerp = 0;
+
+            ChangeState(ClientAtDoorState.StateType);
+            return;
         }
     }
 
@@ -40,7 +34,7 @@ public class ClientGoToDoorState : ClientState
         _lerp = 0;
         _targetindex = 0;
         _startPos = _context.transform.position;
-        _timetoReachTarget = Vector2.Distance(_startPos, _context.pathToDoors[_targetindex].position) / _context.speed;
+        _timetoReachTarget = Vector2.Distance(_startPos, _context.door.position) / _context.speed;
     }
 
     public override void InterruptState()

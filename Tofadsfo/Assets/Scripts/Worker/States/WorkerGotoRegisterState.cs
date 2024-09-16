@@ -19,7 +19,7 @@ public class WorkerGoToRegisterState : WorkerState
     {
 
         _context.workerTran.position = Vector2.Lerp(_startPos, _context.currentPath[_currentPositionIndex], _lerp / _timetoReachTarget);
-        _lerp = _lerp + Time.deltaTime;
+        _lerp = _lerp + Time.deltaTime * PauseSettings.TimeSpeed;
         if (_lerp / _timetoReachTarget > 1)
         {
             if (_currentPositionIndex >= _context.currentPath.Count - 1)

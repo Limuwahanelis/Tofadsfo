@@ -16,7 +16,7 @@ public class LevelRecipesInfoDisplay : MonoBehaviour
         {
             RecipeSO.CraftingRecipeShort recipe= ConvertRecipetoShortFormat(_levelinfo.Orders[i]);
             RecipeInfoDisplay recipeDisplay= Instantiate(_recipeInfoDisplayPrefab,_recipeInfoHolder.transform).GetComponent<RecipeInfoDisplay>();
-            recipeDisplay.SetUp(recipe);
+            recipeDisplay.SetUp(_levelinfo.Orders[i].Icon, recipe);
         }
     }
     RecipeSO.CraftingRecipeShort ConvertRecipetoShortFormat(RecipeSO recipe)

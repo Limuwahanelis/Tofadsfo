@@ -19,6 +19,7 @@ public class ClientAtDoorState : ClientState
     {
         base.SetUpState(context);
         _context.ServeClient();
+        _context.transform.position = _context.door.position;
     }
 
     public override void InterruptState()

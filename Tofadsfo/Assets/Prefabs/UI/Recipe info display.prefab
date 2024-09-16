@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productDisplayPrefab: {fileID: 5713342436120939353, guid: 93ad057026ceba245856fea94246e2be, type: 3}
   _productDisplayHolder: {fileID: 2704016635439656550}
+  _recipeImage: {fileID: 7811715823111061252}
 --- !u!1 &6407378518339306234
 GameObject:
   m_ObjectHideFlags: 0

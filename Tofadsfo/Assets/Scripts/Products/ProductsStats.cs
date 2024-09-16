@@ -16,8 +16,8 @@ public class ProductsStats : MonoBehaviour
     {
         _products = _levelInfo.AvailableProducts;
         _productSelect.SetUp(_products);
-        _maxAmounts = _levelInfo.MaximumAmountOfIngredients;
-        _currentAmounts = _levelInfo.StartingAmountOfIngredients;
+        _maxAmounts = new List<int>( _levelInfo.MaximumAmountOfIngredients);
+        _currentAmounts = new List<int>(_levelInfo.StartingAmountOfIngredients);
     }
     /// <summary>
     /// 

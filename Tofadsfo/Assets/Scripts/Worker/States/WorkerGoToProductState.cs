@@ -19,7 +19,8 @@ public class WorkerGoToProductState : WorkerState
     public override void Update()
     {
         _context.workerTran.position = Vector2.Lerp(_startPos,_context.currentPath[_currentPositionIndex], _lerp / _timetoReachTarget);
-        _lerp = _lerp + Time.deltaTime;
+        _lerp = _lerp + Time.deltaTime * PauseSettings.TimeSpeed;
+        //Logger.Log(_context.workerTran.position);
         if (_lerp / _timetoReachTarget > 1)
         {
             if (_currentPositionIndex >= _context.currentPath.Count - 1)
@@ -43,6 +44,7 @@ public class WorkerGoToProductState : WorkerState
         _currentPositionIndex = 0;
         _startPos = _context.currentPath[0];
         _timetoReachTarget = Vector2.Distance(_startPos, _context.currentPath[1]) / _context.speed;
+        _lerp = 0;
     }
 
     public override void InterruptState()

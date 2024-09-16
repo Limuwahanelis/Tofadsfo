@@ -102,6 +102,7 @@ MonoBehaviour:
   _queue: {fileID: 0}
   _timeToDeliverFood: 2
   test_text: {fileID: 5589377459579188318}
+  _register: {fileID: 0}
 --- !u!1 &8506284855527327732
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8381498518239557588
 RectTransform:
   m_ObjectHideFlags: 0
