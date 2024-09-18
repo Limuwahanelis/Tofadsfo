@@ -10,11 +10,11 @@ public class LevelStartManager : MonoBehaviour
     [Space]
     [SerializeField] LevelInfoSO _levelInfo;
     [SerializeField] LevelInfoDisplay _levelInfoDisplay;
-    [SerializeField] PlayerMouseInteractions _mouseInteractions;
-    [SerializeField] TableProductsManagment _tableProductsManagment;
-    [SerializeField] ClientSpawner _clientSpawner;
-    [SerializeField] LevelTimeDisplay _levelTimeDisplay;
-    [SerializeField] ProductsShop _shop;
+   // [SerializeField] PlayerMouseInteractions _mouseInteractions;
+   // [SerializeField] TableProductsManagment _tableProductsManagment;
+   // [SerializeField] ClientSpawner _clientSpawner;
+   // [SerializeField] LevelTimeDisplay _levelTimeDisplay;
+   // [SerializeField] ProductsShop _shop;
     private void Start()
     {
         _mouseInteractions.SetInteraction(false);
