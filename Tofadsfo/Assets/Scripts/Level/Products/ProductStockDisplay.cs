@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class ProductStockDisplay : MonoBehaviour
 {
-    [SerializeField] ProductsStats _productStats;
     [SerializeField] GameObject _productStockHUDPrefab;
-
-    public void SetUp(LevelInfoSO levelInfo)
+    [SerializeField] GameObject _productStockHUDHolder;
+    public void SetUp(LevelInfoSO levelInfo,ProductsStats stats)
     {
-        levelInfo.
+        
+        for (int i = 0; i < levelInfo.AvailableProducts.Count; i++)
+        {
+            ProductStockHUD stockDisplay = Instantiate(_productStockHUDPrefab, _productStockHUDHolder.transform).GetComponent<ProductStockHUD>();
+            stockDisplay.SetUp(levelInfo.AvailableProducts[i], stats);
+        }
+        //RecipeSO.CraftingRecipeShort recipe = ConvertRecipetoShortFormat(levelInfo.Orders[i]);
+
     }
 }

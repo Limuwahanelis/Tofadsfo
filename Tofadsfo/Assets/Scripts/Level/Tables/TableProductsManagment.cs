@@ -38,7 +38,6 @@ public class TableProductsManagment : MonoBehaviour
         {
             if (_tables[indexProductToRemove].Contains(table))
             {
-                Logger.Warning("Removesaf");
                 _tables[indexProductToRemove].Remove(table);
                 _notReservedProductsAmount[indexProductToRemove] -= table.CurrentProductAmount;
                 UpdateTables(indexProductToRemove);
@@ -56,7 +55,6 @@ public class TableProductsManagment : MonoBehaviour
             return;
         }
         _tables[index].Add(table);
-        Logger.Warning("ADDASDa");
         UpdateTables( index);
         for(int i=0;i<_notReservedProductsAmount.Count;i++)
         {

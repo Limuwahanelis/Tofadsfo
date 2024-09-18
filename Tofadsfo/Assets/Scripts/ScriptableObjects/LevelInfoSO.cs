@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -14,7 +15,6 @@ public class LevelInfoSO : ScriptableObject
     public List<ProductSO> AvailableProducts => _availableProducts;
     public List<int> StartingAmountOfIngredients => _startingAmountOfIngredients;
     public List<int> MaximumAmountOfIngredients => _maximumAmountOfIngredients;
-
     [SerializeField] int _startingMoney;
     [SerializeField] int _levelTimeInSeconds;
     [SerializeField] List<RecipeSO> _orders;
@@ -22,7 +22,6 @@ public class LevelInfoSO : ScriptableObject
     [SerializeField] List<ProductSO> _availableProducts;
     [SerializeField] List<int> _startingAmountOfIngredients;
     [SerializeField] List<int> _maximumAmountOfIngredients;
-
     public int GetMoneyRequiredForALevel()
     {
         int moneyForLevel = 0;
@@ -33,5 +32,4 @@ public class LevelInfoSO : ScriptableObject
         moneyForLevel = ((int)math.ceil(moneyForLevel * 0.9f));
         return moneyForLevel;
     }
-
 }

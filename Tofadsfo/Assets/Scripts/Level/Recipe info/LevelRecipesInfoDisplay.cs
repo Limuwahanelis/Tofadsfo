@@ -6,16 +6,14 @@ using UnityEngine;
 
 public class LevelRecipesInfoDisplay : MonoBehaviour
 {
-    [SerializeField] LevelInfoSO _levelinfo;
     [SerializeField] GameObject _recipeInfoDisplayPrefab;
     [SerializeField] GameObject _recipeInfoHolder;
-
-    private void Start()
+    public void SetUp(LevelInfoSO _levelinfo)
     {
-        for(int i = 0; i < _levelinfo.Orders.Count; i++) 
+        for (int i = 0; i < _levelinfo.Orders.Count; i++)
         {
-            RecipeSO.CraftingRecipeShort recipe= ConvertRecipetoShortFormat(_levelinfo.Orders[i]);
-            RecipeInfoDisplay recipeDisplay= Instantiate(_recipeInfoDisplayPrefab,_recipeInfoHolder.transform).GetComponent<RecipeInfoDisplay>();
+            RecipeSO.CraftingRecipeShort recipe = ConvertRecipetoShortFormat(_levelinfo.Orders[i]);
+            RecipeInfoDisplay recipeDisplay = Instantiate(_recipeInfoDisplayPrefab, _recipeInfoHolder.transform).GetComponent<RecipeInfoDisplay>();
             recipeDisplay.SetUp(_levelinfo.Orders[i].Icon, recipe);
         }
     }

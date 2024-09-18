@@ -18,12 +18,14 @@ public class ProductStockHUD : MonoBehaviour
             _productImage.sprite = _product.Icon;
         }
     }
-
-    private void Start()
+    public void SetUp(ProductSO product, ProductsStats stats)
     {
+        _product = product;
+        _stats = stats;
         _stats.OnCurrentProductAmountChanged += UpdateProduct;
         var (max, curr) = _stats.GetProductAmounts(_product);
         _productMaxAmount = max;
+        _productImage.sprite = _product.Icon;
         _text.text = $"{curr}/{max}";
     }
     private void UpdateProduct(ProductSO product,int amount)
