@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class MoneyInfo : MonoBehaviour
 {
@@ -11,13 +10,12 @@ public class MoneyInfo : MonoBehaviour
 #endif
     public Action<int> OnMoneyCahnged;
     public int CurrentMoney=>_currentMoney;
-    [SerializeField] LevelInfoSO _levelInfo;
     private int _currentMoney;
-    private void Awake()
+    public void SetUp(int levelStartingMoney)
     {
-        _currentMoney= _levelInfo.StartingMoney;
+        _currentMoney = levelStartingMoney;
 #if UNITY_EDITOR 
-        if(!_debug) _currentMoney += GameSaver.GameData.savedMoney;
+        if (!_debug) _currentMoney += GameSaver.GameData.savedMoney;
 #else
         _currentMoney += GameSaver.GameData.savedMoney;
 #endif
