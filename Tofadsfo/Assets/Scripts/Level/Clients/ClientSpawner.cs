@@ -12,10 +12,11 @@ public class ClientSpawner : MonoBehaviour
     public Action OnClientSkipped;
     [SerializeField] GameObject _clientPrefab;
     [SerializeField] Transform _clientSpawnTran;
-    [SerializeField] List<Register> _registers;
     [SerializeField] Transform _door;
+    [SerializeField] Transform _registerHolder;
     [SerializeField] bool _startSpawn = false;
     float _timetoSpawnClient;
+    private List<Register> _registers;
     private List<RecipeSO> _orders;
     private List<int> _spawnedClientsPerOrder=new List<int>();
     private List<int> _amountOfOrders=new List<int>();
@@ -24,9 +25,9 @@ public class ClientSpawner : MonoBehaviour
     private float _timer = 0;
     private int _productIndex = 0;
     private int _registerIndex = 0;
-    private void Start()
+    private void Awake()
     {
-        
+        _registers = _registerHolder.GetComponentsInChildren<Register>().ToList();
     }
     private void Update()
     {
@@ -59,7 +60,6 @@ public class ClientSpawner : MonoBehaviour
                     if (orderIndexLeftWithClients == -1) // No order left with clients.
                     {
                         _startSpawn = false;
-                        //_levelTimeDisplay.SetRemainingTime(0);
                         return;
                     }
                     else

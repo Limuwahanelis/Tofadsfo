@@ -13,16 +13,23 @@ public class LevelEndManager : MonoBehaviour
     [SerializeField] MoneyInfo _moneyInfo;
     [SerializeField] ClientSpawner _clientSpawner;
     [SerializeField] TimeCounter _timeCounter;
-    [SerializeField] List<WorkerController> _workers = new List<WorkerController>();
-    [SerializeField] List<Register> _register= new List<Register>();
+    [SerializeField] Transform _workersHolder;
+    [SerializeField] Transform _registersHolder;
+    private List<WorkerController> _workers = new List<WorkerController>();
+    private List<Register> _registers= new List<Register>();
     private List<ClientController> _clients = new List<ClientController>();
+    private List<bool> _endedOrders=new List<bool>();
     private int _notWorkingWorkerCount = 0;
     private int _earnedMoney = 0;
     private int _balance = 0;
     private int _totalClientsNum;
     private int _skippedClinetsNum;
     private int _servedClinetsNum;
-    private List<bool> _endedOrders=new List<bool>();
+    private void Awake()
+    {
+        _workers=_workersHolder.GetComponentsInChildren<WorkerController>().ToList();
+        _registers = _registersHolder.GetComponentsInChildren<Register>().ToList();
+    }
     private void Start()
     {
         _clientSpawner.OnAllCientsFromOrder += EndOrder;
@@ -40,9 +47,9 @@ public class LevelEndManager : MonoBehaviour
         {
             _workers[i].OnWorkerNoIngredients += IncreaseNotWorkingWorkers;
         }
-        for(int i=0;i<_register.Count;i++) 
+        for(int i=0;i<_registers.Count;i++) 
         {
-            _register[i].OnItemBought += IncreaseMoney;
+            _registers[i].OnItemBought += IncreaseMoney;
         }
     }
     private void EndLevel()
@@ -133,9 +140,9 @@ public class LevelEndManager : MonoBehaviour
         {
             _workers[i].OnWorkerNoIngredients -= IncreaseNotWorkingWorkers;
         }
-        for (int i = 0; i < _register.Count; i++)
+        for (int i = 0; i < _registers.Count; i++)
         {
-            _register[i].OnItemBought -= IncreaseMoney;
+            _registers[i].OnItemBought -= IncreaseMoney;
         }
         _clientSpawner.OnAllCientsFromOrder -= EndOrder;
     }
