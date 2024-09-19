@@ -74,7 +74,6 @@ public class TableProductsManagment : MonoBehaviour
             }
             
         }
-        //_notReservedProductsAmount[index] += table.CurrentProductAmount;
     }
     public void UpdateWorkersnavigations(TableWithProducts table)
     {
@@ -90,7 +89,6 @@ public class TableProductsManagment : MonoBehaviour
         List<int> removedRemainders = new List<int>();
         List<TableWithProducts> tmp =new List<TableWithProducts>( _tables[index]);
         int startCount = tmp.Count;
-        //Logger.Log("Before "+_tables[index].Count);
         for(int i=0;i<tmp.Count;i++)
         {
             tmp[i].SetProductAmount(0);
@@ -132,40 +130,6 @@ public class TableProductsManagment : MonoBehaviour
                 if (removedRemainders.Count==startCount) break;
             }
         }
-        //Logger.Log("Afteer " + _tables[index].Count);
-        //int remainder = 0;
-        //int amountPertable = total;
-        //if (_tables[index].Count != 0)
-        //{
-        //    remainder = total % _tables[index].Count;
-        //    amountPertable = total / _tables[index].Count;
-        //}
-        ////int tmp =((int)math.ceil( total / (float)_tables[index].Count));
-        //for (int j = 0; j < _tables[index].Count; j++)
-        //{
-        //    //_notReservedProductsAmount[index] -= _tables[index][j].CurrentProductAmount;
-        //    int amount = amountPertable;
-        //    if (j == 0)
-        //    {
-        //        if (remainder != 0)
-        //        {
-        //            amount++;
-        //        }
-        //    }
-        //    if (amount > total)
-        //    {
-        //        amount = total;
-        //    }
-        //    // Check if table can contain assigned amount.
-        //    if (amount > _tables[index][j].MaxProductAmount)
-        //    {
-        //        amount = _tables[index][j].MaxProductAmount;
-        //    }
-
-        //    total -= amount;
-        //    _tables[index][j].SetProductAmount(amount);
-        //    //_notReservedProductsAmount[index] += _tables[index][j].CurrentProductAmount;
-        //}
     }
     public bool IsThereEnoughProductsForARecipe(RecipeSO.CraftingRecipeShort recipe)
     {
