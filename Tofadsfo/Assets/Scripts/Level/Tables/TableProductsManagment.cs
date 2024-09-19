@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TableProductsManagment : MonoBehaviour
 {
     [SerializeField] ProductSO _emptyProduct;
     [SerializeField] ProductsStats _productsStats;
-    [SerializeField] List<WorkerNavigation> _workersNavs;
+    [SerializeField] Transform _workersHolder;
+    private List<WorkerNavigation> _workersNavs;
     List<int> _tablesWithProduct=new List<int>();
     List<List<TableWithProducts>> _tables = new List<List<TableWithProducts>>();
     private List<ProductSO> _products = new List<ProductSO>();
     private List<int> _notReservedProductsAmount;
+    private void Awake()
+    {
+        _workersNavs = _workersHolder.GetComponentsInChildren<WorkerNavigation>().ToList();
+    }
     public void SetUp(List<ProductSO> products)
     {
         _productsStats.OnCurrentProductAmountChanged += UpdateTables;
