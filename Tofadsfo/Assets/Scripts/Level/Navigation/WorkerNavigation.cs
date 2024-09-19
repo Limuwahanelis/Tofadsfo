@@ -11,9 +11,6 @@ public class WorkerNavigation : MonoBehaviour
      Register _workerRegister;
      RecipeAssembly _associateAssembler;
     [SerializeField] PathDrawing _pathDraw;
-    [SerializeField] Transform _workerRegisterAccessPoint;
-    [SerializeField] Transform _assemblyAccessPoint;
-    [SerializeField] TableProductsManagment _productManagment;
     [SerializeField] AStarPathfinding _pathfinding;
     [SerializeField] List<Transform> _obstacles = new List<Transform>();
     [SerializeField] Transform obstacleHolder;
@@ -139,7 +136,7 @@ public class WorkerNavigation : MonoBehaviour
         int productIndex =_associateAssembler.Shortrecipe.productTypes.ToList().IndexOf(table.AssociatedProdct);
 
         _assemblerPathColors.Add(_associateAssembler.Shortrecipe.productTypes[productIndex].PathColor);
-        _pathfinding.SetTargetTiles(TransformToVector2Int(_assemblyAccessPoint), TransformToVector2Int(table.AccessPoints[0]));
+        _pathfinding.SetTargetTiles(TransformToVector2Int(_associateAssembler.AccessPoint), TransformToVector2Int(table.AccessPoints[0]));
         _pathsFromAssemblerToIngredients.Add(new PathWithProduct()
         {
             path = _pathfinding.GetPath(),
@@ -150,7 +147,7 @@ public class WorkerNavigation : MonoBehaviour
         _pathDraw.CreateLineFromAssemblerToTable(_pathsFromAssemblerToIngredients[_pathsFromAssemblerToIngredients.Count - 1].path, table);
 
         _registerPathColors.Add(_associateAssembler.Shortrecipe.productTypes[productIndex].PathColor);
-        _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(table.AccessPoints[0]));
+        _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegister.AccessPoint), TransformToVector2Int(table.AccessPoints[0]));
         _pathsFromRegisterToIngredients.Add(new PathWithProduct()
         {
             table = table,
@@ -161,7 +158,7 @@ public class WorkerNavigation : MonoBehaviour
     }
     private void SetPathFromRegisterToAssembler()
     {
-         _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegisterAccessPoint), TransformToVector2Int(_assemblyAccessPoint));
+         _pathfinding.SetTargetTiles(TransformToVector2Int(_workerRegister.AccessPoint), TransformToVector2Int(_associateAssembler.AccessPoint));
         _pathFromRegisterToAsembler =_pathfinding.GetPath();
     }
     #endregion
