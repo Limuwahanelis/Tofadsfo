@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] MoneyInfo _moneyInfo;
     [SerializeField] TimeCounter _timeCounter;
     [SerializeField] LevelRecipesInfoDisplay _levelRecipesInfoDisplay;
+    [SerializeField] LevelEndManager _levelEndManager;
     private void Awake()
     {
         _moneyInfo.SetUp(_levelInfo.StartingMoney);
@@ -42,17 +43,19 @@ public class LevelManager : MonoBehaviour
         _levelTimeDisplay.SetTime(_levelInfo.LevelTimeInSecnods);
         _tableProductsManagment.SetUp(_levelInfo.AvailableProducts);
         _clientSpawner.SetUp(_levelInfo);
+        _levelEndManager.SetUp(_levelInfo);
     }
     private void Reset()
     {
-        _levelInfoDisplay = FindObjectOfType<LevelInfoDisplay>();
-        _mouseInteractions = FindObjectOfType<PlayerMouseInteractions>();
-        _tableProductsManagment = FindObjectOfType<TableProductsManagment>();
-        _clientSpawner = FindObjectOfType<ClientSpawner>();
-        _levelTimeDisplay = FindObjectOfType<LevelTimeDisplay>();
-        _shop = FindObjectOfType<ProductsShop>();
-        _moneyInfo = FindObjectOfType<MoneyInfo>();
-        _timeCounter = FindObjectOfType<TimeCounter>();
-        _levelRecipesInfoDisplay = FindObjectOfType<LevelRecipesInfoDisplay>();
+        _levelInfoDisplay = FindObjectOfType<LevelInfoDisplay>(true);
+        _mouseInteractions = FindObjectOfType<PlayerMouseInteractions>(true);
+        _tableProductsManagment = FindObjectOfType<TableProductsManagment>(true);
+        _clientSpawner = FindObjectOfType<ClientSpawner>(true);
+        _levelTimeDisplay = FindObjectOfType<LevelTimeDisplay>(true);
+        _shop = FindObjectOfType<ProductsShop>(true);
+        _moneyInfo = FindObjectOfType<MoneyInfo>(true);
+        _timeCounter = FindObjectOfType<TimeCounter>(true);
+        _levelRecipesInfoDisplay = FindObjectOfType<LevelRecipesInfoDisplay>(true);
+        _levelEndManager = FindObjectOfType<LevelEndManager>(true);
     }
 }
