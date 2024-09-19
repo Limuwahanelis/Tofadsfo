@@ -43,10 +43,16 @@ public class LevelManager : MonoBehaviour
         _tableProductsManagment.SetUp(_levelInfo.AvailableProducts);
         _clientSpawner.SetUp(_levelInfo);
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Reset()
     {
-        
+        _levelInfoDisplay = FindObjectOfType<LevelInfoDisplay>();
+        _mouseInteractions = FindObjectOfType<PlayerMouseInteractions>();
+        _tableProductsManagment = FindObjectOfType<TableProductsManagment>();
+        _clientSpawner = FindObjectOfType<ClientSpawner>();
+        _levelTimeDisplay = FindObjectOfType<LevelTimeDisplay>();
+        _shop = FindObjectOfType<ProductsShop>();
+        _moneyInfo = FindObjectOfType<MoneyInfo>();
+        _timeCounter = FindObjectOfType<TimeCounter>();
+        _levelRecipesInfoDisplay = FindObjectOfType<LevelRecipesInfoDisplay>();
     }
 }
