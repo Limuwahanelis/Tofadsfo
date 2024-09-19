@@ -304,6 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _recipe: {fileID: 11400000, guid: 2f135872e57028949a16d7232d3cb5d9, type: 2}
   _spriteRenderer: {fileID: 1421620787545621921}
+  _accessPoint: {fileID: 6341735571934167691}
 --- !u!212 &1214447062001960189
 SpriteRenderer:
   m_ObjectHideFlags: 0
