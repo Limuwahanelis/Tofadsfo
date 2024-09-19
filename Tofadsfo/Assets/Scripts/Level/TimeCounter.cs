@@ -38,4 +38,8 @@ public class TimeCounter : MonoBehaviour
     {
         _countTime = value;
     }
+    private void Reset()
+    {
+        _levelTimeDisplay = FindObjectOfType<LevelTimeDisplay>();
+    }
 }

@@ -188,4 +188,9 @@ public class WorkerNavigation : MonoBehaviour
         return toRet;
     }
     #endregion
+
+    private void Reset()
+    {
+        _pathfinding = FindObjectOfType<AStarPathfinding>();
+    }
 }
