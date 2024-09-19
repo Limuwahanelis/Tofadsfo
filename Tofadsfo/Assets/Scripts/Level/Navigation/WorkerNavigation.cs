@@ -15,7 +15,6 @@ public class WorkerNavigation : MonoBehaviour
     [SerializeField] Transform _assemblyAccessPoint;
     [SerializeField] TableProductsManagment _productManagment;
     [SerializeField] AStarPathfinding _pathfinding;
-    [SerializeField] List<ProductSO> _productsOrder;
     [SerializeField] List<Transform> _obstacles = new List<Transform>();
     [SerializeField] Transform obstacleHolder;
     [SerializeField] Transform _tablesHolder;

@@ -8,11 +8,11 @@ using UnityEngine;
 public class WorkerController : MonoBehaviour
 {
     public Action OnWorkerNoIngredients;
-    [SerializeField] float _speed;
     [SerializeField] WorkerNavigation _nav;
     [SerializeField] RecipeAssembly _associatedAssembler;
     [SerializeField] TableProductsManagment _tableProductsManagment;
     [SerializeField] Register _register;
+    [SerializeField] Transform _workerBody;
 
     protected Dictionary<Type, WorkerState> _workerStates = new Dictionary<Type, WorkerState>();
     protected WorkerState _currenStatet;
@@ -46,7 +46,7 @@ public class WorkerController : MonoBehaviour
             ChangeState = ChangeState,
             navigation = _nav,
             associatedAssembler=_associatedAssembler,
-            workerTran=transform,
+            workerTran= _workerBody,
             tableProductsManagment=_tableProductsManagment,
             register=_register,
             WorkDone=OnWorkerNoIngredients,
