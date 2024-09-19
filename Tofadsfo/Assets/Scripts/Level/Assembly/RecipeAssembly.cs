@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class RecipeAssembly : MonoBehaviour
 {
+    public Transform AccessPoint => _accessPoint;
     public RecipeSO.CraftingRecipeShort Shortrecipe => _recipeShort;
     public RecipeSO Recipe => _recipe;
     [SerializeField] RecipeSO _recipe;
     [SerializeField] SpriteRenderer _spriteRenderer;
+    [SerializeField] Transform _accessPoint;
     private RecipeSO.CraftingRecipeShort _recipeShort;
     private RecipeSO.CraftingRecipeShort _collectedProductsShort;
     void Awake()

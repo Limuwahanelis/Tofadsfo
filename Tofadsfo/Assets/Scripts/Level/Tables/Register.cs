@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Register : MonoBehaviour
 {
+    public Transform AccessPoint => _accessPoint;
     public Action<int> OnItemBought;
     public ProductSO Product => _recipe.Result;
     [SerializeField] RecipeSO _recipe;
@@ -12,6 +13,7 @@ public class Register : MonoBehaviour
 
     [SerializeField] SpriteRenderer _productIcon;
     [SerializeField] ClientQueue _queue;
+    [SerializeField] Transform _accessPoint;
     public bool IsOrderRequested => _isOrderRequested;
     private bool _isOrderRequested=false;
     private bool _isOrderOnRegister;
