@@ -1328,8 +1328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _emptyProduct: {fileID: 11400000, guid: fd11239369774834aa405b7cb758f6e0, type: 2}
   _productsStats: {fileID: 348215351}
-  _workersNavs:
-  - {fileID: 457764039}
+  _workersHolder: {fileID: 0}
 --- !u!114 &348215355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1683,17 +1682,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5354495965927195551, guid: cd6254b05a57bd542a310db698cde9f7, type: 3}
   m_PrefabInstance: {fileID: 2803830316926702009}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &457764039 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7308469293982708002, guid: cd6254b05a57bd542a310db698cde9f7, type: 3}
-  m_PrefabInstance: {fileID: 2803830316926702009}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04787b136662eb746b71b8e318a5a942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &480769169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3536,8 +3524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _workerPathDisplaySelectorPrefab: {fileID: 1425135919448083680, guid: 4ea859e1b6779434d92ae9c24360a773, type: 3}
   _displayHolder: {fileID: 512696779}
-  _workersNavs:
-  - {fileID: 457764039}
+  _workersHolder: {fileID: 1062512078}
 --- !u!4 &824344153 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8470251100607143684, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
@@ -6702,6 +6689,7 @@ MonoBehaviour:
   _moneyInfo: {fileID: 348215353}
   _timeCounter: {fileID: 348215355}
   _levelRecipesInfoDisplay: {fileID: 691510402}
+  _levelEndManager: {fileID: 0}
 --- !u!1001 &1960889920
 PrefabInstance:
   m_ObjectHideFlags: 0

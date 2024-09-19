@@ -2757,9 +2757,9 @@ GameObject:
   m_Component:
   - component: {fileID: 603964483}
   m_Layer: 0
-  m_Name: Client spawn
+  m_Name: Client spawn pos
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3704,9 +3704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _workerPathDisplaySelectorPrefab: {fileID: 1425135919448083680, guid: 4ea859e1b6779434d92ae9c24360a773, type: 3}
   _displayHolder: {fileID: 512696779}
-  _workersNavs:
-  - {fileID: 0}
-  - {fileID: 0}
+  _workersHolder: {fileID: 657819403}
 --- !u!1 &824344148 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3656866771876770009, guid: 0c57a01b386aa134d9d7fe539a069edd, type: 3}
@@ -5291,6 +5289,7 @@ MonoBehaviour:
   _moneyInfo: {fileID: 348215353}
   _timeCounter: {fileID: 348215355}
   _levelRecipesInfoDisplay: {fileID: 691510402}
+  _levelEndManager: {fileID: 0}
 --- !u!1001 &1444177296
 PrefabInstance:
   m_ObjectHideFlags: 0
