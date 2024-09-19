@@ -7,12 +7,14 @@ public class WorkersPathDisplay : MonoBehaviour
 {
     [SerializeField] GameObject _workerPathDisplaySelectorPrefab;
     [SerializeField] GameObject _displayHolder;
-    [SerializeField] List<WorkerNavigation> _workersNavs;
+    [SerializeField] Transform _workersHolder;
+    List<WorkerNavigation> _workersNavs;
     private List<WorkerPathDisplaySelector> _pathSelectors= new List<WorkerPathDisplaySelector>();
     // Start is called before the first frame update
     void Start()
     {
-        for(int i=0;i<_workersNavs.Count;i++) 
+        _workersNavs=_workersHolder.GetComponentsInChildren<WorkerNavigation>().ToList();
+        for (int i=0;i<_workersNavs.Count;i++) 
         {
             WorkerPathDisplaySelector selector= Instantiate(_workerPathDisplaySelectorPrefab, _displayHolder.transform).GetComponent<WorkerPathDisplaySelector>();
             selector.SetUP(i+1,_workersNavs[i].AssociatedAssembly.Shortrecipe.productTypes.ToList(), _workersNavs[i].PathDrawer);
