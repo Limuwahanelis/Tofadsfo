@@ -29,27 +29,28 @@ public class LevelEndManager : MonoBehaviour
     {
         _workers=_workersHolder.GetComponentsInChildren<WorkerController>().ToList();
         _registers = _registersHolder.GetComponentsInChildren<Register>().ToList();
-    }
-    private void Start()
-    {
-        _clientSpawner.OnAllCientsFromOrder += EndOrder;
-        _clientSpawner.OnClientSkipped += IncreaseSkippedClients;
-        _clientSpawner.OnClientSpawned += AddClient;
-        for(int i=0;i<_levelInfoSO.Orders.Count;i++)
-        {
-            _endedOrders.Add(false);
-        }
-        for(int i=0;i<_levelInfoSO.AmountOfOrders.Count;i++)
-        {
-            _totalClientsNum += _levelInfoSO.AmountOfOrders[i];
-        }
-        for(int i=0;i<_workers.Count;i++)
+        for (int i = 0; i < _workers.Count; i++)
         {
             _workers[i].OnWorkerNoIngredients += IncreaseNotWorkingWorkers;
         }
-        for(int i=0;i<_registers.Count;i++) 
+        for (int i = 0; i < _registers.Count; i++)
         {
             _registers[i].OnItemBought += IncreaseMoney;
+        }
+    }
+    public void SetUp(LevelInfoSO levelInfoSO)
+    {
+        _levelInfoSO = levelInfoSO;
+        _clientSpawner.OnAllCientsFromOrder += EndOrder;
+        _clientSpawner.OnClientSkipped += IncreaseSkippedClients;
+        _clientSpawner.OnClientSpawned += AddClient;
+        for (int i = 0; i < _levelInfoSO.Orders.Count; i++)
+        {
+            _endedOrders.Add(false);
+        }
+        for (int i = 0; i < _levelInfoSO.AmountOfOrders.Count; i++)
+        {
+            _totalClientsNum += _levelInfoSO.AmountOfOrders[i];
         }
     }
     private void EndLevel()
