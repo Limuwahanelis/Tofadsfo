@@ -7,24 +7,13 @@ using UnityEngine;
 public class LevelTimeDisplay : MonoBehaviour
 {
     [SerializeField] TMP_Text _remainingTimeText;
-    private float _startingTime;
     private float _remainingTime;
-    private bool _countDown = false;
     private void Update()
     {
-        //if (!_countDown) return;
-        //_remainingTime-=(Time.deltaTime*PauseSettings.TimeSpeed);
-        //_remainingTime = math.clamp(_remainingTime, 0, _startingTime);
-        //_remainingTimeText.text = FormatTime();
-        //if (_remainingTime <= 0) _countDown = false;
-    }
-    public void StartCoundown()
-    {
-        _countDown = true;
+
     }
     public void SetTime(float time)
     {
-        _startingTime = time;
         _remainingTime = time;
         _remainingTimeText.text = FormatTime();
     }

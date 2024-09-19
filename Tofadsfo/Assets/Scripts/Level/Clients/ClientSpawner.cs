@@ -14,7 +14,6 @@ public class ClientSpawner : MonoBehaviour
     [SerializeField] Transform _clientSpawnTran;
     [SerializeField] List<Register> _registers;
     [SerializeField] Transform _door;
-    [SerializeField] LevelTimeDisplay _levelTimeDisplay;
     [SerializeField] bool _startSpawn = false;
     float _timetoSpawnClient;
     private List<RecipeSO> _orders;
@@ -23,27 +22,14 @@ public class ClientSpawner : MonoBehaviour
     private List<List<int>> _clientsPerRegisterNum=new List<List<int>>();
     private List<List<Register>> _sortedRegisters=new List<List<Register>>();
     private float _timer = 0;
-    private float _remainingTime = 0;
     private int _productIndex = 0;
     private int _registerIndex = 0;
-    private float _levelTime;
-    private bool countTime = false;
     private void Start()
     {
         
     }
     private void Update()
     {
-        if (countTime)
-        {
-            _remainingTime -= (Time.deltaTime * PauseSettings.TimeSpeed);
-            _remainingTime = math.clamp(_remainingTime, 0, _levelTime);
-            if(_remainingTime<0)
-            {
-                countTime = false;
-            }
-            _levelTimeDisplay.SetRemainingTime(_remainingTime);
-        }
         if (!_startSpawn) return;
         _timer += Time.deltaTime * PauseSettings.TimeSpeed;
 
@@ -131,12 +117,10 @@ public class ClientSpawner : MonoBehaviour
         {
             totalOrders+= _amountOfOrders[i];
         }
-        _levelTime = levelInfo.LevelTimeInSecnods;
-        _timetoSpawnClient = _levelTime / totalOrders;
+        _timetoSpawnClient = levelInfo.LevelTimeInSecnods / totalOrders;
 
-
+        SetRegisters();
     }
-    // used by a button
     public void SetRegisters()
     {
         for (int i = 0; i < _orders.Count; i++)
@@ -155,8 +139,6 @@ public class ClientSpawner : MonoBehaviour
     // used by a button
     public void SetSpawn(bool value)
     {
-        _remainingTime = _levelTime;
-            countTime = value;
         _startSpawn = value;
     }
     public void SpawnClient(int num,Register register)

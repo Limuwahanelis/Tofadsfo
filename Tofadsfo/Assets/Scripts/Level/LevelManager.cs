@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] LevelTimeDisplay _levelTimeDisplay;
     [SerializeField] ProductsShop _shop;
     [SerializeField] MoneyInfo _moneyInfo;
-    
+    [SerializeField] TimeCounter _timeCounter;
     [SerializeField] LevelRecipesInfoDisplay _levelRecipesInfoDisplay;
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
             _levelInfoDisplay.Hide();
         }
 #endif
-       
+        _timeCounter.SetUp(_levelInfo.LevelTimeInSecnods);
         _levelRecipesInfoDisplay.SetUp(_levelInfo);
         _levelInfoDisplay.SetOrders(_levelInfo);
         _shop.SetUpShop(_levelInfo);

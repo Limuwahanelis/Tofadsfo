@@ -12,6 +12,7 @@ public class LevelEndManager : MonoBehaviour
     [SerializeField] LevelEndDisplay _levelEndDisplay;
     [SerializeField] MoneyInfo _moneyInfo;
     [SerializeField] ClientSpawner _clientSpawner;
+    [SerializeField] TimeCounter _timeCounter;
     [SerializeField] List<WorkerController> _workers = new List<WorkerController>();
     [SerializeField] List<Register> _register= new List<Register>();
     private List<ClientController> _clients = new List<ClientController>();
@@ -48,6 +49,7 @@ public class LevelEndManager : MonoBehaviour
     {
         Logger.Log($"Level end. earned {_earnedMoney}");
         _balance = _moneyInfo.CurrentMoney - _levelInfoSO.GetMoneyRequiredForALevel();
+        _timeCounter.SetCountdown(false);
         _levelEndDisplay.SetUp(_moneyInfo.CurrentMoney, _levelInfoSO.GetMoneyRequiredForALevel(), _balance);
         _levelEndDisplay.gameObject.SetActive(true);
         _levelEndDisplay.transform.parent.gameObject.SetActive(true);
